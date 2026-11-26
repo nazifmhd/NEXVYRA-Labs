@@ -106,6 +106,22 @@ export function GoalRouter() {
             ))}
           </ul>
         </Spotlight>
+        <Reveal className="mt-6">
+          <Link
+            href="/ai-readiness"
+            data-cursor="Start"
+            className="group flex flex-col gap-4 rounded-[1.5rem] border border-dashed border-action/40 bg-white px-7 py-5 transition-colors hover:border-action hover:bg-mist sm:flex-row sm:items-center sm:justify-between"
+          >
+            <span>
+              <span className="font-mono text-[0.72rem] tracking-[0.14em] text-action uppercase">Not sure where to start?</span>
+              <span className="mt-1 block font-display text-[1.25rem] text-navy">Take the two-minute AI readiness check</span>
+            </span>
+            <span className="inline-flex items-center gap-2 text-[0.95rem] font-medium text-action">
+              Start the check
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </span>
+          </Link>
+        </Reveal>
       </Container>
     </section>
   );

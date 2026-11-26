@@ -27,7 +27,7 @@ export function ArchitectureDiagram({ diagram, initial, caption }: { diagram: Di
   return (
     <div className="grid gap-6 lg:grid-cols-12">
       {/* Diagram (md+) */}
-      <div className="relative hidden overflow-hidden rounded-[1.5rem] border border-line bg-mist md:block lg:col-span-8">
+      <div className="relative hidden overflow-hidden rounded-[1.5rem] border border-line bg-mist md:block lg:col-span-12">
         <div className="bp-grid-fine pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="relative" style={{ aspectRatio: `${W} / ${H}` }}>
           <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full" aria-hidden="true" focusable="false">
@@ -121,33 +121,38 @@ export function ArchitectureDiagram({ diagram, initial, caption }: { diagram: Di
       </ul>
 
       {/* Detail panel */}
-      <div id={panelId} aria-live="polite" className="lg:col-span-4">
+      <div id={panelId} aria-live="polite" className="lg:col-span-12">
         {node && (
-          <div key={node.id} className="animate-rise relative h-full overflow-hidden rounded-[1.5rem] bg-navy-950 p-7 text-white">
+          <div key={node.id} className="animate-rise relative overflow-hidden rounded-[1.5rem] bg-navy-950 p-7 text-white sm:p-8">
             <div className="bp-grid-dark pointer-events-none absolute inset-0 opacity-70" aria-hidden="true" />
-            <div className="relative flex h-full flex-col">
-              <p className="font-mono text-[0.68rem] tracking-[0.14em] text-accent uppercase">Component</p>
-              <h3 className="mt-3 font-display text-[1.6rem] leading-tight font-medium">{node.label}</h3>
-              <p className="mt-1 font-mono text-[0.7rem] tracking-[0.08em] text-sky/60 uppercase">{node.sub}</p>
-              <p className="mt-5 text-[0.98rem] leading-relaxed text-sky/85">{node.detail}</p>
-              {node.examples && (
-                <ul className="mt-5 flex flex-wrap gap-2">
-                  {node.examples.map((e) => (
-                    <li key={e} className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[0.8rem] text-sky">
-                      {e}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {service && (
-                <Link
-                  href={`/services/${service.slug}`}
-                  className="group mt-auto inline-flex items-center gap-2 pt-8 text-[0.95rem] text-white hover:text-sky"
-                >
-                  Delivered through {service.title}
-                  <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </Link>
-              )}
+            {/* Console readout: identity · what it does · examples & owner */}
+            <div className="relative grid gap-6 md:grid-cols-12 md:gap-10">
+              <div className="md:col-span-3">
+                <p className="font-mono text-[0.68rem] tracking-[0.14em] text-accent uppercase">Component</p>
+                <h3 className="mt-3 font-display text-[1.6rem] leading-tight font-medium">{node.label}</h3>
+                <p className="mt-1 font-mono text-[0.7rem] tracking-[0.08em] text-sky/60 uppercase">{node.sub}</p>
+              </div>
+              <p className="text-[1rem] leading-relaxed text-sky/85 md:col-span-5 md:border-l md:border-white/10 md:pl-8">{node.detail}</p>
+              <div className="flex flex-col gap-5 md:col-span-4">
+                {node.examples && (
+                  <ul className="flex flex-wrap gap-2">
+                    {node.examples.map((e) => (
+                      <li key={e} className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[0.8rem] text-sky">
+                        {e}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {service && (
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="group inline-flex items-center gap-2 text-[0.95rem] text-white hover:text-sky"
+                  >
+                    Delivered through {service.title}
+                    <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         )}

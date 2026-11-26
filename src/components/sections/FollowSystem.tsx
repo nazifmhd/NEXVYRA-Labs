@@ -371,11 +371,18 @@ export function FollowSystem({ index = "03" }: { index?: string }) {
                 >
                   <span className={cn("h-2 w-2 rounded-full transition-all duration-500", n <= active ? "scale-100 bg-action" : "scale-50 bg-line")} />
                 </span>
-                <div className={cn("transition-opacity duration-500", n === active ? "lg:opacity-100" : "lg:opacity-40")}>
+                <div className="group/step" data-current={n === active ? "true" : undefined}>
                   <p className="font-mono text-[0.72rem] tracking-[0.14em] text-muted uppercase">
                     Step {String(n + 1).padStart(2, "0")} · {s.tag}
                   </p>
-                  <h3 className="mt-2 font-display text-[clamp(1.5rem,2.4vw,2.1rem)] leading-tight font-medium text-navy">{s.title}</h3>
+                  <h3
+                    className={cn(
+                      "mt-2 font-display text-[clamp(1.5rem,2.4vw,2.1rem)] leading-tight font-medium transition-colors duration-500",
+                      n === active ? "text-navy" : "text-navy lg:text-muted",
+                    )}
+                  >
+                    {s.title}
+                  </h3>
                   <p className="mt-3 max-w-md text-[1.02rem] leading-relaxed text-muted">{s.body}</p>
                 </div>
                 {/* Mobile: inline console per step */}

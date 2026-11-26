@@ -19,7 +19,6 @@ export type Service = {
   includes: { title: string; body: string }[];
   capabilities: string[];
   approach: { title: string; body: string }[];
-  technologies: string[];
   faqs: { q: string; a: string }[];
   seoDescription: string;
 };
@@ -60,7 +59,6 @@ export const services: Service[] = [
       { title: "Engineer the system", body: "Retrieval, tools, prompts and interfaces — iterated against the evaluation, not intuition." },
       { title: "Operate with evidence", body: "Monitoring, feedback capture and regression checks so improvements are provable." },
     ],
-    technologies: ["Python", "TypeScript", "LLM provider APIs", "Vector search", "PostgreSQL / pgvector", "Agent frameworks"],
     faqs: [
       { q: "Which models do you work with?", a: "We stay provider-agnostic and choose models per task based on quality, latency, cost and data requirements. Many systems use more than one model." },
       { q: "Can the AI work with our private data securely?", a: "Yes, with appropriate design: access controls on retrieval, data-handling agreements with providers, and options for self-hosted models where data must not leave your environment." },
@@ -105,7 +103,6 @@ export const services: Service[] = [
       { title: "Build in increments", body: "Working software every iteration, with code review, tests and demos." },
       { title: "Hand over cleanly", body: "Documentation, runbooks and knowledge transfer so you are never locked in." },
     ],
-    technologies: ["TypeScript", "React / Next.js", "Node.js", "Python", "PostgreSQL", "REST & GraphQL", "Docker"],
     faqs: [
       { q: "Can you take over an existing codebase?", a: "Yes. We start with a technical review to understand risks and quick wins, then agree a plan to stabilise and extend it." },
       { q: "Do you build MVPs for startups?", a: "Yes — scoped to validate the riskiest assumptions quickly, on foundations that won’t need to be thrown away if it succeeds." },
@@ -149,7 +146,6 @@ export const services: Service[] = [
       { title: "Design for exceptions", body: "Every flow has a defined path for the cases it can’t handle." },
       { title: "Monitor and refine", body: "Track throughput, failures and handoffs to improve continuously." },
     ],
-    technologies: ["Workflow orchestration platforms", "Python", "TypeScript", "Webhooks & REST APIs", "LLM provider APIs", "Voice AI platforms"],
     faqs: [
       { q: "Will automation replace our team?", a: "Our aim is to remove repetitive work so your people can focus on judgment, relationships and exceptions — the work that benefits most from them." },
       { q: "What happens when an automation fails?", a: "Failures are surfaced through alerts and exception queues with enough context for someone to resolve them. Nothing should fail silently." },
@@ -193,7 +189,6 @@ export const services: Service[] = [
       { title: "Prove", body: "Deliver a focused first step that validates the direction." },
       { title: "Scale", body: "Expand in stages, measuring outcomes and adjusting the roadmap." },
     ],
-    technologies: ["AWS", "Infrastructure as code", "Docker", "PostgreSQL", "Event-driven integration", "Observability tooling"],
     faqs: [
       { q: "Do you only recommend, or also implement?", a: "Both. Many engagements start with an assessment and continue into implementation with our software and automation teams." },
       { q: "Are you tied to a particular cloud vendor?", a: "No. Recommendations are based on your requirements, existing investments and team skills." },

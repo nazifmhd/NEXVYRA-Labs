@@ -8,7 +8,7 @@ import { industries } from "@/content/industries";
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.siteUrl;
   const now = new Date();
-  const staticRoutes = ["", "/about", "/services", "/solutions", "/industries", "/projects", "/process", "/careers", "/contact", "/privacy", "/terms", "/accessibility"];
+  const staticRoutes = ["", "/about", "/services", "/solutions", "/industries", "/projects", "/process", "/ai-readiness", "/careers", "/contact", "/privacy", "/terms", "/accessibility"];
   if (insights.length > 0) staticRoutes.push("/insights");
 
   return [

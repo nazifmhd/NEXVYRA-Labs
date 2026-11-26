@@ -11,3 +11,8 @@ next-env.d.ts
 npm-debug.log*
 .DS_Store
 .vercel
+evals/assistant/results/
+screenshots/
+test-results/
+playwright-report/
+.inspect/

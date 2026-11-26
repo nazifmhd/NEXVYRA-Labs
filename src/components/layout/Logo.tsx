@@ -9,12 +9,11 @@ export function Logo({ tone = "light", className }: { tone?: "light" | "dark"; c
     <Link
       href="/"
       className={cn("group inline-flex items-center gap-3", className)}
-      aria-label={`${brand.displayName} — home`}
     >
       <span className="relative block h-9 w-9 overflow-hidden rounded-[10px] ring-1 ring-navy/10 transition-transform duration-500 ease-[var(--ease-expo)] group-hover:rotate-[8deg]">
         <Image src={brand.logoMark} alt="" width={72} height={72} className="h-full w-full scale-[1.35] object-cover" priority />
       </span>
-      <span className="flex flex-col leading-none" aria-hidden="true">
+      <span className="flex flex-col leading-none">
         <span
           className={cn(
             "font-display text-[1.06rem] font-semibold tracking-[0.18em]",
@@ -29,7 +28,9 @@ export function Logo({ tone = "light", className }: { tone?: "light" | "dark"; c
             tone === "light" ? "text-action" : "text-sky",
           )}
         >
+          <span className="sr-only"> </span>
           {brand.wordmarkSub}
+          <span className="sr-only"> home</span>
         </span>
       </span>
     </Link>

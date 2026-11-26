@@ -60,7 +60,10 @@ export const primaryNav: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-export const companyExtraNav: NavItem[] = [{ label: "Careers", href: "/careers" }];
+export const companyExtraNav: NavItem[] = [
+  { label: "AI Readiness Check", href: "/ai-readiness" },
+  { label: "Careers", href: "/careers" },
+];
 
 export const legalNav: NavItem[] = [
   { label: "Privacy", href: "/privacy" },

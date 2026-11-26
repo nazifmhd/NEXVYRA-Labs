@@ -5,7 +5,6 @@ import { SelectedWork } from "@/components/sections/SelectedWork";
 import { SolutionsPreview } from "@/components/sections/SolutionsPreview";
 import { ProcessPath } from "@/components/sections/ProcessPath";
 import { Principles } from "@/components/sections/Principles";
-import { TechStack } from "@/components/sections/TechStack";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { projects } from "@/content/projects";
 import { services } from "@/content/services";
@@ -15,6 +14,7 @@ import { FollowSystem } from "@/components/sections/FollowSystem";
 import { ArchitectureExplorer } from "@/components/sections/ArchitectureExplorer";
 import { Commitments } from "@/components/sections/Commitments";
 import { InsightsPreview } from "@/components/sections/InsightsPreview";
+import { QualityGates } from "@/components/sections/QualityGates";
 import { insights } from "@/content/insights";
 
 export default function HomePage() {
@@ -39,7 +39,7 @@ export default function HomePage() {
       <ProcessPath index={n()} />
       <Principles index={n()} />
       <Commitments index={n()} />
-      <TechStack index={n()} />
+      <QualityGates index={n()} />
       {insights.length > 0 && <InsightsPreview index={n()} />}
       <CtaBand />
     </>

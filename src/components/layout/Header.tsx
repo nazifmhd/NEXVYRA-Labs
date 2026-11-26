@@ -233,7 +233,7 @@ export function Header() {
           >
             Contact
           </Link>
-          <ButtonLink href="/contact" arrow className="hidden px-5! py-2.5! text-[0.92rem] sm:inline-flex">
+          <ButtonLink href="/contact" arrow className="px-5! py-2.5! text-[0.92rem] max-sm:hidden!">
             Start a Project
           </ButtonLink>
           <button

@@ -62,7 +62,7 @@ function renderBlock(b: Block, i: number) {
             <span>{b.lang}</span>
             <span aria-hidden="true">● ● ●</span>
           </figcaption>
-          <pre className="overflow-x-auto p-5 text-[0.86rem] leading-relaxed text-sky">
+          <pre tabIndex={0} aria-label={`Code example (${b.lang})`} className="overflow-x-auto p-5 text-[0.86rem] leading-relaxed text-sky focus-visible:outline-2 focus-visible:outline-accent">
             <code>{b.code}</code>
           </pre>
         </figure>
@@ -143,7 +143,7 @@ export default async function ArticlePage({ params }: Props) {
                 </div>
               </nav>
             )}
-            <div className="max-w-[44rem] space-y-6 text-[1.08rem] leading-[1.75] text-navy/85 lg:col-span-8 [&_h2]:pt-6 [&_h2]:font-display [&_h2]:text-[1.75rem] [&_h2]:leading-tight [&_h2]:font-medium [&_h2]:text-navy [&_li]:pl-1 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6">
+            <div className="min-w-0 max-w-[44rem] space-y-6 text-[1.08rem] leading-[1.75] text-navy/85 lg:col-span-8 [&_h2]:pt-6 [&_h2]:font-display [&_h2]:text-[1.75rem] [&_h2]:leading-tight [&_h2]:font-medium [&_h2]:text-navy [&_li]:pl-1 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6">
               {a.body.map(renderBlock)}
               <p className="border-t border-line pt-8 text-[0.95rem] text-muted">
                 Written by the {siteConfig.brand.displayName} engineering team.{" "}

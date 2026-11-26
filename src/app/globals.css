@@ -218,15 +218,21 @@ html:not(.js) .signal-line-v {
 @keyframes decode-failsafe-hide { to { opacity: 0; } }
 
 /* ---------- Scan reveal: headings are "scanned in" top-to-bottom ---------- */
+/* The clip lives on the child: a fully clipped element is never reported as
+   intersecting, so clipping the observed wrapper itself would never reveal. */
 .scan-reveal {
   position: relative;
+}
+.scan-reveal > * {
   clip-path: inset(-0.2em -0.1em -0.3em -0.1em);
   transition: clip-path 1.2s var(--ease-expo) 0.1s;
 }
 .js .scan-reveal[data-reveal]:not([data-visible]) {
-  clip-path: inset(-0.2em -0.1em 100% -0.1em);
   opacity: 1;
   transform: none;
+}
+.js .scan-reveal[data-reveal]:not([data-visible]) > * {
+  clip-path: inset(-0.2em -0.1em 100% -0.1em);
 }
 .scan-reveal::after {
   content: "";
@@ -579,6 +585,11 @@ html.boot header { animation: header-in 0.9s var(--ease-expo) 1.45s both; }
   animation: caret-blink 1s steps(1) infinite;
 }
 
+/* ---------- Readiness check ---------- */
+@keyframes rd-bar {
+  from { transform: scaleX(0); }
+}
+
 /* ---------- Site assistant ---------- */
 .core-orb-shape { animation: orb-spin 14s linear infinite; }
 .core-orb-orbit { animation: orb-spin 4.5s linear infinite reverse; }
@@ -647,7 +658,7 @@ html.boot header { animation: header-in 0.9s var(--ease-expo) 1.45s both; }
     opacity: 1;
     transform: none;
   }
-  .js .scan-reveal[data-reveal]:not([data-visible]) {
+  .js .scan-reveal[data-reveal]:not([data-visible]) > * {
     clip-path: none;
   }
   .js [data-reveal]:not([data-visible]) .draw-svg [pathLength] {

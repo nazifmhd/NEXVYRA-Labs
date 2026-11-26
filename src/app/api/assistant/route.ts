@@ -38,7 +38,7 @@ const getClient = () => (client ??= new Anthropic());
 export async function POST(req: Request) {
   if (!process.env.ANTHROPIC_API_KEY) return json(503, { message: "The assistant isn’t available right now." });
 
-  // Per-visitor limit: 20 questions per 10 minutes.
+  // Per-visitor limit: 20 questions per 10 minutes (production).
   const g = await guardJson(req, { bucket: "assistant", maxBytes: 24_000, limit: 20 });
   if (!g.ok) return g.res;
 

@@ -35,7 +35,9 @@ export function Reveal({
           io.disconnect();
         }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.1 },
+      // The large top margin counts anything already scrolled past as "seen",
+      // so content skipped during a fast scroll or jump is never left hidden.
+      { rootMargin: "10000px 0px -8% 0px", threshold: 0.1 },
     );
     io.observe(el);
     return () => io.disconnect();

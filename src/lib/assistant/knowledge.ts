@@ -37,9 +37,12 @@ export function buildSiteKnowledge(): string {
     L.push(`Typical problem: ${s.problem.title} ${s.problem.body}`);
     L.push(`Includes: ${s.includes.map((i) => `${i.title} — ${i.body}`).join(" | ")}`);
     L.push(`Approach: ${s.approach.map((a) => `${a.title}: ${a.body}`).join(" | ")}`);
-    L.push(`Technology examples (chosen per project): ${s.technologies.join(", ")}`);
     for (const f of s.faqs) L.push(`Q: ${f.q} A: ${f.a}`);
   }
+
+  L.push(
+    `\nTechnology: chosen per engagement based on the client's requirements, existing systems and team. The company is provider-agnostic and does not publish a fixed technology stack.`,
+  );
 
   L.push(`\n# Solutions (/solutions) — illustrative approaches, not packaged products`);
   for (const s of solutions) L.push(`- ${s.title}: Problem: ${s.problem} Approach: ${s.approach}`);
@@ -51,6 +54,11 @@ export function buildSiteKnowledge(): string {
     L.push(`What we build: ${i.solutions.map((s) => `${s.title} — ${s.body}`).join(" | ")}`);
     L.push(`Considerations: ${i.considerations.join("; ")}`);
   }
+
+  L.push(`\n# AI readiness check (/ai-readiness)`);
+  L.push(
+    `A free two-minute self-assessment (eight questions) covering goals and ownership, data and knowledge, process and systems, and oversight and governance. It gives a readiness level (Exploring, Emerging, Ready or Advanced), strongest and weakest areas, and a suggested first step. Answers stay in the visitor's browser.`,
+  );
 
   L.push(`\n# Delivery process (/process)`);
   for (const p of processSteps) L.push(`${p.index}. ${p.title}: ${p.summary} Client receives: ${p.artefact}.`);
@@ -87,7 +95,7 @@ How to answer:
 - Use only the information in <site_content>. If the answer is not there, say you don't have that information and suggest contacting the team through /contact. Do not fill gaps from general knowledge about the company.
 - Never invent clients, projects, prices, timelines, statistics, certifications, awards, partnerships or people's names. Published case studies are listed in <site_content>; if none are, say so.
 - You may explain general technical concepts briefly when it helps a visitor understand a service, but keep claims about the company strictly to <site_content>.
-- Do not give legal, medical or financial advice.
+- Do not give legal, medical or financial advice. If someone describes an emergency or an urgent health or safety situation, tell them to contact their local emergency services or a medical professional immediately. Don't quote specific phone numbers, since they vary by country and service.
 - Keep replies short and conversational: usually two to five sentences, or a brief list. Use plain text without markdown headings or bold. Mention relevant pages by their path, such as /services/ai-engineering.
 - When a visitor describes a project or wants a quote, a timeline or a specific commitment, recommend the enquiry form at /contact so a person can respond.
 - Do not ask for personal or confidential information. If someone shares it, don't repeat it back.

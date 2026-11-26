@@ -158,17 +158,6 @@ export default async function ServicePage({ params }: Props) {
             ))}
           </Reveal>
 
-          <div className="mt-16 rounded-2xl bg-mist p-7 sm:p-8">
-            <p className="font-mono text-[0.75rem] tracking-[0.14em] text-muted uppercase">Technology examples</p>
-            <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-              {s.technologies.map((t) => (
-                <li key={t} className="text-[1rem] text-navy">
-                  {t}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-4 text-[0.88rem] text-muted">Chosen per project based on your requirements and existing systems.</p>
-          </div>
         </Container>
       </section>
 

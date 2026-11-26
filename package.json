@@ -7,7 +7,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "eval:assistant": "node evals/assistant/run.mjs",
+    "test": "playwright test --project=desktop --project=mobile",
+    "test:screens": "playwright test --project=screens"
   },
   "engines": {
     "node": ">=20.9.0"
@@ -23,6 +26,8 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.1",
+    "@playwright/test": "^1.65.1",
     "@tailwindcss/postcss": "^4.1.13",
     "@types/node": "^22.18.0",
     "@types/react": "^19.1.12",

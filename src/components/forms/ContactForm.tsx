@@ -209,11 +209,13 @@ export function ContactForm({ aside }: { aside?: ReactNode }) {
     const q = new URLSearchParams(window.location.search);
     const type = q.get("type");
     const svc = (q.get("services") ?? "").split(",").filter((s): s is ServiceSlug => (SERVICE_SLUGS as readonly string[]).includes(s));
-    if (!type && svc.length === 0) return;
+    const brief = (q.get("brief") ?? "").slice(0, 1500);
+    if (!type && svc.length === 0 && !brief) return;
     setData((d) => ({
       ...d,
       enquiryType: ENQUIRY_TYPES.some((t) => t.value === type) ? (type as string) : d.enquiryType,
       services: svc.length ? svc : d.services,
+      message: brief || d.message,
     }));
   }, []);
 
