@@ -10,25 +10,30 @@ import { CtaBand } from "@/components/sections/CtaBand";
 import { projects } from "@/content/projects";
 import { services } from "@/content/services";
 import { VelocityMarquee } from "@/components/motion/VelocityMarquee";
+import { GoalRouter } from "@/components/sections/GoalRouter";
+import { FollowSystem } from "@/components/sections/FollowSystem";
 
 export default function HomePage() {
-  // Section indices stay sequential whether or not Selected Work is shown.
+  // Section indices stay sequential whatever sections are shown.
   const hasWork = projects.length > 0;
-  const n = (i: number) => String(hasWork ? i + 1 : i).padStart(2, "0");
+  let i = 1; // [01] is the philosophy section
+  const n = () => String(++i).padStart(2, "0");
 
   return (
     <>
       <Hero />
+      <GoalRouter />
       <Manifesto />
-      <Capabilities index="02" />
+      <Capabilities index={n()} />
       <section className="border-y border-line bg-white py-10 sm:py-14" aria-label="Capabilities in motion">
         <VelocityMarquee items={services.map((s) => s.title)} />
       </section>
-      {hasWork && <SelectedWork index="03" />}
-      <SolutionsPreview index={n(3)} />
-      <ProcessPath index={n(4)} />
-      <Principles index={n(5)} />
-      <TechStack index={n(6)} />
+      <FollowSystem index={n()} />
+      {hasWork && <SelectedWork index={n()} />}
+      <SolutionsPreview index={n()} />
+      <ProcessPath index={n()} />
+      <Principles index={n()} />
+      <TechStack index={n()} />
       <CtaBand />
     </>
   );

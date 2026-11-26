@@ -542,6 +542,43 @@ html.boot header { animation: header-in 0.9s var(--ease-expo) 1.45s both; }
   transition-duration: 0s;
 }
 
+/* ---------- Follow one system: console stages ---------- */
+.fs-item {
+  transition:
+    opacity 0.55s var(--ease-expo),
+    transform 0.55s var(--ease-expo);
+  transition-delay: calc(var(--i, 0) * 110ms + 80ms);
+}
+.js .fs-stage:not([data-active]) .fs-item {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition-delay: 0ms;
+}
+.fs-bar > span {
+  transform: scaleX(var(--v, 1));
+  transition: transform 1.1s var(--ease-expo) 0.35s;
+}
+.js .fs-stage:not([data-active]) .fs-bar > span {
+  transform: scaleX(0);
+  transition-delay: 0ms;
+}
+
+/* ---------- Live project brief ---------- */
+@keyframes brief-flash {
+  0% { background-color: rgb(54 140 235 / 0.35); color: #fff; }
+  100% { background-color: transparent; }
+}
+.brief-val {
+  border-radius: 4px;
+  animation: brief-flash 0.9s ease-out;
+}
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}
+.brief-caret {
+  animation: caret-blink 1s steps(1) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -564,6 +601,8 @@ html.boot header { animation: header-in 0.9s var(--ease-expo) 1.45s both; }
     opacity: 1;
     transform: none;
   }
+  .js .fs-stage:not([data-active]) .fs-item { opacity: 1; transform: none; }
+  .js .fs-stage:not([data-active]) .fs-bar > span { transform: scaleX(var(--v, 1)); }
   .js .decode-root .decode-cell .decode-final { opacity: 1; }
   .js .decode-root .decode-cell .decode-glyph { opacity: 0; }
   .boot-intro,
