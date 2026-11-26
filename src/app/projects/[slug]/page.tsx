@@ -10,6 +10,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { ProjectViewTracker } from "./ProjectViewTracker";
+import { ArchitectureDiagram } from "@/components/visuals/ArchitectureDiagram";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -120,6 +121,11 @@ export default async function CaseStudyPage({ params }: Props) {
 
           <Block index={idx()} label="Architecture">
             <p>{p.architecture.summary}</p>
+            {p.architecture.diagram && (
+              <div className="mt-8 not-prose">
+                <ArchitectureDiagram diagram={p.architecture.diagram} caption={`System architecture · ${p.title}`} />
+              </div>
+            )}
             {p.architecture.components.length > 0 && (
               <dl className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
                 {p.architecture.components.map((c) => (

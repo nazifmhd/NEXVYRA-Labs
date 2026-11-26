@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { legalNav, primaryNav, siteConfig, socialLinks } from "@/config/site";
+import { companyExtraNav, legalNav, primaryNav, siteConfig, socialLinks } from "@/config/site";
 import { services } from "@/content/services";
 import { insights } from "@/content/insights";
 import { ArrowUpRight } from "@/components/ui/Icons";
@@ -11,7 +11,7 @@ export function Footer() {
   const year = new Date().getFullYear();
   const { brand, contact } = siteConfig;
   const socials = socialLinks();
-  const nav = primaryNav.filter((i) => i.href !== "/insights" || insights.length > 0);
+  const nav = [...primaryNav.filter((i) => i.href !== "/insights" || insights.length > 0), ...companyExtraNav];
 
   return (
     <footer className="relative overflow-hidden bg-navy-950 text-white">

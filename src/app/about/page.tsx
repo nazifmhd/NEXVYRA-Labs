@@ -6,6 +6,7 @@ import { SectionHeader, SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/motion/Reveal";
 import { Principles } from "@/components/sections/Principles";
 import { CtaBand } from "@/components/sections/CtaBand";
+import { Commitments } from "@/components/sections/Commitments";
 import { IntelligenceCore } from "@/components/visuals/IntelligenceCore";
 
 export const metadata = pageMetadata({
@@ -97,7 +98,8 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <Principles index="03" />
+      <Commitments index="03" />
+      <Principles index="04" />
       <CtaBand />
     </>
   );

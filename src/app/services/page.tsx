@@ -9,6 +9,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Spotlight } from "@/components/motion/Spotlight";
 import { ProcessPath } from "@/components/sections/ProcessPath";
 import { CtaBand } from "@/components/sections/CtaBand";
+import { Engagements } from "@/components/sections/Engagements";
 
 export const metadata = pageMetadata({
   title: "Services",
@@ -65,7 +66,8 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      <ProcessPath index="01" />
+      <Engagements index="01" />
+      <ProcessPath index="02" />
       <CtaBand />
     </>
   );

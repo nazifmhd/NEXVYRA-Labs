@@ -20,7 +20,7 @@ export default function PrivacyPage() {
       </p>
 
       <h2>What we collect</h2>
-      <p>We collect personal information only when you choose to send it through our enquiry form:</p>
+      <p>We collect personal information only when you choose to send it to us. Through our enquiry form:</p>
       <ul>
         <li>
           <strong>Required:</strong> your name, email address, enquiry type, areas of interest and project description.
@@ -32,11 +32,22 @@ export default function PrivacyPage() {
           <strong>Technical:</strong> your IP address is processed briefly to protect the form from abuse (rate limiting). It is not stored with your enquiry.
         </li>
       </ul>
+      <p>
+        Through our <Link href="/careers">talent pool</Link> form: your name, email address, area of work, a profile link, a short description of
+        yourself and, optionally, your location.
+      </p>
+      <p>
+        If you use the <strong>website assistant</strong>, the questions you type are sent to our AI provider to generate an answer. We do not store
+        assistant conversations on this website, and we do not use them to identify you. Please don’t enter personal or confidential information
+        into the assistant.
+      </p>
       <p>This website does not currently use advertising or tracking cookies.</p>
 
       <h2>How we use it</h2>
       <ul>
         <li>To read, respond to and follow up on your enquiry.</li>
+        <li>To contact talent-pool members about relevant roles.</li>
+        <li>To answer questions asked through the website assistant.</li>
         <li>To protect the website and form from spam and misuse.</li>
       </ul>
       <p>We do not sell your personal information or use it for unrelated marketing without your consent.</p>
@@ -44,13 +55,15 @@ export default function PrivacyPage() {
       <h2>Who receives it</h2>
       <p>
         Enquiries are delivered to our team by a transactional email provider acting on our behalf, and the website is run on a hosting provider. These
-        providers process data only to provide their services to us.
+        providers process data only to provide their services to us. Website assistant questions are processed by Anthropic, our AI provider,
+        to generate answers.
       </p>
 
       <h2>How long we keep it</h2>
       <p>
         We keep enquiry emails only as long as needed to handle the enquiry and any resulting business relationship, then delete them unless we are
-        required to retain them.
+        required to retain them. Talent-pool details are kept until you ask us to remove them, or until they are no longer relevant to our
+        recruitment.
       </p>
 
       <h2>Your rights</h2>

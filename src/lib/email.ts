@@ -48,15 +48,15 @@ function formatBody(d: ContactData) {
   ].join("\n");
 }
 
-export async function deliverEnquiry(data: ContactData): Promise<DeliveryResult> {
+type Mail = { subject: string; text: string; replyTo: string; logMeta: Record<string, string | number> };
+
+/** Shared delivery for every website form. Never logs personal data. */
+export async function sendMail(mail: Mail): Promise<DeliveryResult> {
   const { apiKey, to, from } = env();
 
   if (!apiKey || !to || !from) {
     if (process.env.NODE_ENV !== "production") {
-      console.info("[contact] Email provider not configured — accepted in development only.", {
-        enquiryType: data.enquiryType,
-        services: data.services.length,
-      });
+      console.info("[mail] Email provider not configured — accepted in development only.", mail.logMeta);
       return { ok: true, mode: "dev-log" };
     }
     return { ok: false, reason: "not_configured" };
@@ -66,13 +66,7 @@ export async function deliverEnquiry(data: ContactData): Promise<DeliveryResult>
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from,
-        to: [to],
-        reply_to: data.email,
-        subject: `Website enquiry — ${label(ENQUIRY_TYPES, data.enquiryType)} — ${data.name.slice(0, 60)}`,
-        text: formatBody(data),
-      }),
+      body: JSON.stringify({ from, to: [to], reply_to: mail.replyTo, subject: mail.subject, text: mail.text }),
       signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) return { ok: false, reason: `provider_${res.status}` };
@@ -80,4 +74,13 @@ export async function deliverEnquiry(data: ContactData): Promise<DeliveryResult>
   } catch (err) {
     return { ok: false, reason: err instanceof Error ? err.name : "unknown" };
   }
+}
+
+export function deliverEnquiry(data: ContactData) {
+  return sendMail({
+    subject: `Website enquiry — ${label(ENQUIRY_TYPES, data.enquiryType)} — ${data.name.slice(0, 60)}`,
+    text: formatBody(data),
+    replyTo: data.email,
+    logMeta: { enquiryType: data.enquiryType, services: data.services.length },
+  });
 }

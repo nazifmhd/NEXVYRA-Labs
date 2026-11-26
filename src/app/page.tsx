@@ -12,6 +12,10 @@ import { services } from "@/content/services";
 import { VelocityMarquee } from "@/components/motion/VelocityMarquee";
 import { GoalRouter } from "@/components/sections/GoalRouter";
 import { FollowSystem } from "@/components/sections/FollowSystem";
+import { ArchitectureExplorer } from "@/components/sections/ArchitectureExplorer";
+import { Commitments } from "@/components/sections/Commitments";
+import { InsightsPreview } from "@/components/sections/InsightsPreview";
+import { insights } from "@/content/insights";
 
 export default function HomePage() {
   // Section indices stay sequential whatever sections are shown.
@@ -29,11 +33,14 @@ export default function HomePage() {
         <VelocityMarquee items={services.map((s) => s.title)} />
       </section>
       <FollowSystem index={n()} />
+      <ArchitectureExplorer index={n()} />
       {hasWork && <SelectedWork index={n()} />}
       <SolutionsPreview index={n()} />
       <ProcessPath index={n()} />
       <Principles index={n()} />
+      <Commitments index={n()} />
       <TechStack index={n()} />
+      {insights.length > 0 && <InsightsPreview index={n()} />}
       <CtaBand />
     </>
   );

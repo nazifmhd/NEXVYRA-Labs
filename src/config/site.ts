@@ -53,11 +53,14 @@ export const primaryNav: NavItem[] = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Solutions", href: "/solutions" },
+  { label: "Industries", href: "/industries" },
   { label: "Projects", href: "/projects" },
   { label: "Process", href: "/process" },
   { label: "Insights", href: "/insights" },
   { label: "Contact", href: "/contact" },
 ];
+
+export const companyExtraNav: NavItem[] = [{ label: "Careers", href: "/careers" }];
 
 export const legalNav: NavItem[] = [
   { label: "Privacy", href: "/privacy" },

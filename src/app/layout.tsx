@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { ScrollSignal } from "@/components/motion/ScrollSignal";
 import { ReticleCursor } from "@/components/motion/ReticleCursor";
 import { BootIntro } from "@/components/layout/BootIntro";
+import { Assistant } from "@/components/assistant/Assistant";
 import "./globals.css";
 
 // Self-hosted variable fonts (no build-time network dependency, no third-party font requests).
@@ -79,6 +80,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </main>
         <Footer />
+        {/* Shown only when the server has an API key; the key itself never reaches the browser. */}
+        {process.env.ANTHROPIC_API_KEY ? <Assistant /> : null}
         <JsonLd
           data={{
             "@context": "https://schema.org",

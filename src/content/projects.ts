@@ -1,3 +1,5 @@
+import type { Diagram } from "@/content/architecture";
+
 /**
  * Projects & case studies (blueprint §5.5).
  *
@@ -24,7 +26,7 @@ export type Project = {
   constraints: string[];
   role: string;
   approach: string[];
-  architecture: { summary: string; components: { name: string; detail: string }[] };
+  architecture: { summary: string; components: { name: string; detail: string }[]; diagram?: Diagram };
   stack: string[];
   outcomes: { value?: string; detail: string; method?: string }[];
   lessons: string[];

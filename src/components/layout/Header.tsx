@@ -100,7 +100,7 @@ export function Header() {
       }
     };
     document.addEventListener("keydown", onKey);
-    const onResize = () => window.innerWidth >= 1024 && closeDrawer(false);
+    const onResize = () => window.innerWidth >= 1280 && closeDrawer(false);
     window.addEventListener("resize", onResize);
     return () => {
       document.body.style.overflow = prevOverflow;
@@ -130,10 +130,10 @@ export function Header() {
             : "bg-transparent",
       )}
     >
-      <div className="mx-auto flex h-[4.5rem] w-full max-w-[1280px] items-center justify-between gap-6 px-5 sm:px-8 lg:px-12">
+      <div className="mx-auto flex h-[4.5rem] w-full max-w-[1280px] items-center justify-between gap-6 px-5 sm:px-8 xl:px-12">
         <Logo />
 
-        <nav aria-label="Primary" className="hidden lg:block">
+        <nav aria-label="Primary" className="hidden xl:block">
           <ul className="flex items-center gap-1">
             {nav.map((item) =>
               item.href === "/services" ? (
@@ -229,7 +229,7 @@ export function Header() {
           <Link
             href="/contact"
             aria-current={isActive(pathname, "/contact") ? "page" : undefined}
-            className="hidden px-3 py-2 text-[0.94rem] text-navy transition-colors hover:text-action lg:inline-block"
+            className="hidden px-3 py-2 text-[0.94rem] text-navy transition-colors hover:text-action xl:inline-block"
           >
             Contact
           </Link>
@@ -239,7 +239,7 @@ export function Header() {
           <button
             ref={menuBtnRef}
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white/70 text-navy lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white/70 text-navy xl:hidden"
             aria-expanded={menuOpen}
             aria-controls={drawerId}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -258,7 +258,7 @@ export function Header() {
         aria-modal="true"
         aria-label="Site menu"
         hidden={!menuOpen}
-        className="fixed inset-x-0 top-[4.5rem] bottom-0 overflow-y-auto bg-white lg:hidden"
+        className="fixed inset-x-0 top-[4.5rem] bottom-0 overflow-y-auto bg-white xl:hidden"
       >
         <div className="bp-grid-fine pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" />
         <nav aria-label="Mobile" className="relative px-5 pt-6 pb-10 sm:px-8">
