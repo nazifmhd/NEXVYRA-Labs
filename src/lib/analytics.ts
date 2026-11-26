@@ -11,7 +11,9 @@ export type AnalyticsEvent =
   | "contact_form_start"
   | "contact_form_submit_success"
   | "contact_form_error"
-  | "outbound_link_click";
+  | "outbound_link_click"
+  | "assistant_open"
+  | "assistant_feedback";
 
 type Props = Record<string, string | number | boolean>;
 

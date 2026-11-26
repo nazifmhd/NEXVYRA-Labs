@@ -8,6 +8,7 @@ import { ScrollSignal } from "@/components/motion/ScrollSignal";
 import { ReticleCursor } from "@/components/motion/ReticleCursor";
 import { BootIntro } from "@/components/layout/BootIntro";
 import { Assistant } from "@/components/assistant/Assistant";
+import { routeTitles } from "@/lib/assistant/routes";
 import "./globals.css";
 
 // Self-hosted variable fonts (no build-time network dependency, no third-party font requests).
@@ -81,7 +82,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </main>
         <Footer />
         {/* Shown only when the server has an API key; the key itself never reaches the browser. */}
-        {process.env.ANTHROPIC_API_KEY ? <Assistant /> : null}
+        {process.env.ANTHROPIC_API_KEY ? <Assistant titles={routeTitles()} /> : null}
         <JsonLd
           data={{
             "@context": "https://schema.org",

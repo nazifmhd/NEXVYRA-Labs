@@ -6,7 +6,9 @@ import { ASSISTANT_RULES, buildSiteKnowledge } from "@/lib/assistant/knowledge";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const MODEL = "claude-opus-5-5";
+// Claude Haiku 5.5: fast and low-cost, a good fit for short site Q&A.
+// (Haiku has no server-side refusal fallback; refusals end in the /contact handoff below.)
+const MODEL = "claude-haiku-5-5";
 const HANDOFF = "\n\nI can't help with that one here — please use /contact and a person from the team will reply.";
 
 const bodySchema = z
@@ -26,7 +28,7 @@ const bodySchema = z
   .refine((b) => b.messages.every((m) => m.role !== "user" || m.content.length <= 1000), "Messages are limited to 1,000 characters");
 
 // Built once per server instance; deterministic so the prompt cache stays warm.
-const SYSTEM: Anthropic.Beta.BetaTextBlockParam[] = [
+const SYSTEM: Anthropic.TextBlockParam[] = [
   { type: "text", text: `${ASSISTANT_RULES}\n\n<site_content>\n${buildSiteKnowledge()}\n</site_content>`, cache_control: { type: "ephemeral" } },
 ];
 
@@ -43,12 +45,10 @@ export async function POST(req: Request) {
   const parsed = bodySchema.safeParse(g.body);
   if (!parsed.success) return json(400, { message: parsed.error.issues[0]?.message ?? "Invalid request" });
 
-  const stream = getClient().beta.messages.stream({
+  const stream = getClient().messages.stream({
     model: MODEL,
     max_tokens: 8000,
     output_config: { effort: "low" },
-    betas: ["server-side-fallback-2026-07-01"],
-    fallbacks: "default",
     system: SYSTEM,
     messages: parsed.data.messages,
   });

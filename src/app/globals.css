@@ -579,6 +579,63 @@ html.boot header { animation: header-in 0.9s var(--ease-expo) 1.45s both; }
   animation: caret-blink 1s steps(1) infinite;
 }
 
+/* ---------- Site assistant ---------- */
+.core-orb-shape { animation: orb-spin 14s linear infinite; }
+.core-orb-orbit { animation: orb-spin 4.5s linear infinite reverse; }
+.core-orb[data-busy] .core-orb-shape { animation-duration: 2.2s; }
+.core-orb[data-busy] .core-orb-orbit { animation-duration: 1.1s; }
+@keyframes orb-spin { to { transform: rotate(360deg); } }
+
+/* Aperture: the panel irises open from the launcher */
+.ast-panel {
+  clip-path: circle(0 at calc(100% - 1.75rem) calc(100% + 2.75rem));
+  visibility: hidden;
+  transition:
+    clip-path 0.55s cubic-bezier(0.7, 0, 0.84, 0),
+    visibility 0s linear 0.55s;
+}
+.ast-panel[data-open] {
+  clip-path: circle(160% at calc(100% - 1.75rem) calc(100% + 2.75rem));
+  visibility: visible;
+  transition:
+    clip-path 0.8s var(--ease-expo),
+    visibility 0s;
+}
+.ast-panel[data-open] .ast-intro > *,
+.ast-panel[data-open] .ast-topic {
+  animation: ast-in 0.6s var(--ease-expo) both;
+}
+.ast-panel[data-open] .ast-intro > :nth-child(2) { animation-delay: 80ms; }
+.ast-panel[data-open] .ast-intro > :nth-child(3) { animation-delay: 140ms; }
+.ast-msg { animation: ast-in 0.45s var(--ease-expo) both; }
+@keyframes ast-in {
+  from { opacity: 0; transform: translate3d(0, 8px, 0); }
+  to { opacity: 1; transform: none; }
+}
+.ast-caret {
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: var(--color-sky);
+  animation: caret-blink 0.9s steps(1) infinite;
+}
+.ast-teaser { animation: ast-in 0.6s var(--ease-expo) both; }
+.ast-launcher::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  border: 1px solid rgb(54 140 235 / 0.5);
+  animation: ast-ring 3.2s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes ast-ring {
+  0% { opacity: 0.7; transform: scale(0.92); }
+  70%, 100% { opacity: 0; transform: scale(1.18); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -607,6 +664,7 @@ html.boot header { animation: header-in 0.9s var(--ease-expo) 1.45s both; }
   .js .decode-root .decode-cell .decode-glyph { opacity: 0; }
   .boot-intro,
   .reticle,
+  .ast-launcher::after,
   .trace-pulse,
   .process-pulse,
   .process-pulse-v,
