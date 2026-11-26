@@ -18,6 +18,24 @@ const variants: Record<Variant, string> = {
 
 type CommonProps = { variant?: Variant; arrow?: boolean; children: ReactNode; className?: string };
 
+/** Label rolls up and is replaced by an identical copy on hover (text only). */
+function Label({ children }: { children: ReactNode }) {
+  if (typeof children !== "string") return <>{children}</>;
+  return (
+    <span className="relative inline-flex overflow-hidden">
+      <span className="block transition-transform duration-500 ease-[var(--ease-expo)] group-hover/btn:-translate-y-full motion-reduce:transition-none">
+        {children}
+      </span>
+      <span
+        className="absolute inset-0 block translate-y-full transition-transform duration-500 ease-[var(--ease-expo)] group-hover/btn:translate-y-0 motion-reduce:hidden"
+        aria-hidden="true"
+      >
+        {children}
+      </span>
+    </span>
+  );
+}
+
 function Arrow() {
   return (
     <span className="relative inline-flex h-4 w-4 overflow-hidden" aria-hidden="true">
@@ -36,7 +54,7 @@ export function ButtonLink({
 }: CommonProps & Omit<ComponentProps<typeof Link>, "className" | "children">) {
   return (
     <Link className={cn(base, variants[variant], className)} {...rest}>
-      <span>{children}</span>
+      <Label>{children}</Label>
       {arrow && <Arrow />}
     </Link>
   );
@@ -51,7 +69,7 @@ export function Button({
 }: CommonProps & Omit<ComponentProps<"button">, "className" | "children">) {
   return (
     <button className={cn(base, variants[variant], className)} {...rest}>
-      {children}
+      <Label>{children}</Label>
       {arrow && <Arrow />}
     </button>
   );

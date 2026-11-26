@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { CoreFallback } from "@/components/visuals/CoreFallback";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { InView } from "@/components/motion/InView";
+import { Parallax } from "@/components/motion/Parallax";
 
 export function CtaBand({
   title = "Your next big idea starts here.",
@@ -15,6 +16,7 @@ export function CtaBand({
   return (
     <section className="bg-white py-20 sm:py-24" aria-labelledby="cta-title">
       <Container>
+        <Parallax mode="enter" from={0.9} y={60}>
         <div className="relative isolate overflow-hidden rounded-[2rem] bg-gradient-to-br from-ice via-mist to-white px-6 py-16 ring-1 ring-line sm:px-12 sm:py-20 lg:px-16">
           <div className="bp-grid pointer-events-none absolute inset-0 -z-10 opacity-80" aria-hidden="true" />
           <InView className="pointer-events-none absolute top-1/2 right-[-6rem] -z-10 hidden w-[28rem] -translate-y-1/2 opacity-90 md:block">
@@ -40,6 +42,7 @@ export function CtaBand({
             </div>
           </div>
         </div>
+        </Parallax>
       </Container>
     </section>
   );

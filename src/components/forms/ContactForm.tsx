@@ -444,7 +444,7 @@ export function ContactForm() {
       </div>
 
       <div className="flex flex-wrap items-center gap-4 pt-2">
-        <Button type="submit" disabled={submitting} aria-disabled={submitting} arrow={!submitting} className="min-w-52">
+        <Button type="submit" data-cursor="Send" disabled={submitting} aria-disabled={submitting} arrow={!submitting} className="min-w-52">
           {submitting ? (
             <>
               <Spinner /> <span>Sending…</span>

@@ -7,6 +7,7 @@ import { DecodeText } from "@/components/motion/DecodeText";
 import { PointerProbe } from "@/components/motion/PointerProbe";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { InView } from "@/components/motion/InView";
+import { Parallax } from "@/components/motion/Parallax";
 import { services } from "@/content/services";
 import { projects } from "@/content/projects";
 
@@ -33,7 +34,7 @@ export function Hero() {
 
       <Container className="relative">
         <div className="grid items-center gap-8 pt-12 pb-16 sm:pt-16 lg:min-h-[calc(100svh-4.5rem)] lg:grid-cols-12 lg:gap-6 lg:pt-6 lg:pb-20">
-          <div className="lg:col-span-7">
+          <Parallax className="lg:col-span-7" y={140} fade={1.1}>
             <p className="animate-rise inline-flex items-center gap-3 rounded-full border border-line bg-white/70 py-1.5 pr-4 pl-1.5 font-mono text-[0.75rem] tracking-[0.14em] text-navy uppercase backdrop-blur" style={d(0)}>
               <span className="pulse-dot h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
               The next era of technology
@@ -65,9 +66,9 @@ export function Hero() {
                 Start a Conversation
               </ButtonLink>
             </div>
-          </div>
+          </Parallax>
 
-          <div className="relative lg:col-span-5">
+          <Parallax className="relative lg:col-span-5" y={70} scale={0.12} fade={0.6}>
             <div className="frame-marks relative mx-auto max-w-[min(30rem,85vw)] p-5 sm:p-7">
               <div className="flex items-center justify-between font-mono text-[0.68rem] tracking-[0.14em] text-muted uppercase">
                 <span>FIG. 01 — Intelligence Core</span>
@@ -75,7 +76,7 @@ export function Hero() {
               </div>
               <IntelligenceCore className="mt-3" />
             </div>
-          </div>
+          </Parallax>
         </div>
 
         {/* Capability rail */}

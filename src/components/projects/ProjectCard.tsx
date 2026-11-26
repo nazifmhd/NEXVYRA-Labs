@@ -36,7 +36,7 @@ export function ProjectCard({ project, priority = false }: { project: Project; p
         {project.year && <span>· {project.year}</span>}
       </div>
       <h3 className="mt-2 font-display text-[1.6rem] leading-tight font-medium text-navy">
-        <Link href={`/projects/${project.slug}`} className="after:absolute after:inset-0 after:content-['']">
+        <Link href={`/projects/${project.slug}`} data-cursor="View" className="after:absolute after:inset-0 after:content-['']">
           {project.title}
         </Link>
       </h3>

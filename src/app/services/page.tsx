@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { ServiceGlyph } from "@/components/visuals/ServiceGlyph";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import { Reveal } from "@/components/motion/Reveal";
+import { Spotlight } from "@/components/motion/Spotlight";
 import { ProcessPath } from "@/components/sections/ProcessPath";
 import { CtaBand } from "@/components/sections/CtaBand";
 
@@ -28,17 +29,18 @@ export default function ServicesPage() {
 
       <section className="bg-white pb-24 sm:pb-32" aria-label="Service pillars">
         <Container>
+          <Spotlight>
           <ul className="grid gap-5 md:grid-cols-2">
             {services.map((s, i) => (
               <Reveal as="li" key={s.slug} delay={(i % 2) * 90}>
-                <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-line bg-white p-8 transition-[border-color,box-shadow] duration-500 hover:border-action/40 hover:shadow-[0_30px_60px_-36px_rgb(23_105_170/0.5)] sm:p-10">
+                <article className="spot-card group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-line bg-white p-8 transition-[border-color,box-shadow] duration-500 hover:border-action/40 hover:shadow-[0_30px_60px_-36px_rgb(23_105_170/0.5)] sm:p-10">
                   <div className="bp-grid-fine pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100" aria-hidden="true" />
                   <div className="relative flex items-start justify-between">
                     <span className="font-mono text-[0.8rem] tracking-[0.14em] text-muted">{s.index}</span>
                     <ServiceGlyph slug={s.slug} className="h-16 w-16 text-action transition-transform duration-700 ease-[var(--ease-expo)] group-hover:rotate-[24deg]" />
                   </div>
                   <h2 className="relative mt-8 font-display text-[clamp(1.75rem,3vw,2.4rem)] leading-tight font-medium text-navy">
-                    <Link href={`/services/${s.slug}`} className="after:absolute after:inset-0 after:content-['']">
+                    <Link href={`/services/${s.slug}`} data-cursor="Explore" className="after:absolute after:inset-0 after:content-['']">
                       {s.title}
                     </Link>
                   </h2>
@@ -59,6 +61,7 @@ export default function ServicesPage() {
               </Reveal>
             ))}
           </ul>
+          </Spotlight>
         </Container>
       </section>
 

@@ -5,6 +5,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { CoreFallback } from "@/components/visuals/CoreFallback";
 import { CircuitTraces } from "@/components/visuals/CircuitTraces";
 import { InView } from "@/components/motion/InView";
+import { Spotlight } from "@/components/motion/Spotlight";
 
 export function Principles({ index = "05" }: { index?: string }) {
   return (
@@ -24,9 +25,10 @@ export function Principles({ index = "05" }: { index?: string }) {
           title={<span id="principles-title">Principles we engineer by.</span>}
           intro="Not slogans — working rules that shape how we scope, build and support every engagement."
         />
+        <Spotlight tone="dark">
         <ul className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
           {principles.map((p, i) => (
-            <Reveal as="li" key={p.code} delay={(i % 3) * 80} className="group bg-navy p-7 transition-colors duration-500 hover:bg-[#13324f] sm:p-8">
+            <Reveal as="li" key={p.code} delay={(i % 3) * 80} className="spot-card group bg-navy p-7 transition-colors duration-500 hover:bg-[#13324f] sm:p-8">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[0.72rem] tracking-[0.14em] text-sky/70">{p.code}</span>
                 <span className="h-1.5 w-1.5 rounded-full bg-accent opacity-60 transition-opacity group-hover:opacity-100" aria-hidden="true" />
@@ -36,6 +38,7 @@ export function Principles({ index = "05" }: { index?: string }) {
             </Reveal>
           ))}
         </ul>
+        </Spotlight>
       </Container>
     </section>
   );

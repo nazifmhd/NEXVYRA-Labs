@@ -5,6 +5,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ScrollSignal } from "@/components/motion/ScrollSignal";
+import { ReticleCursor } from "@/components/motion/ReticleCursor";
+import { BootIntro } from "@/components/layout/BootIntro";
 import "./globals.css";
 
 // Self-hosted variable fonts (no build-time network dependency, no third-party font requests).
@@ -29,6 +31,8 @@ const mono = localFont({
 });
 
 const { brand } = siteConfig;
+
+const bootScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(!sessionStorage.getItem('nx-boot')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('boot');sessionStorage.setItem('nx-boot','1');setTimeout(function(){d.classList.remove('boot')},2100)}}catch(e){}})();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -57,8 +61,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${inter.variable} ${space.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
-        {/* Enables reveal animations only when JS runs; content stays visible otherwise. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        {/* Enables motion only when JS runs; plays the boot intro once per session (never for reduced motion). */}
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
       <body className="min-h-dvh overflow-x-clip">
         <a
@@ -67,7 +71,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Skip to content
         </a>
+        <BootIntro />
         <ScrollSignal />
+        <ReticleCursor />
         <Header />
         <main id="main" tabIndex={-1} className="outline-none">
           {children}

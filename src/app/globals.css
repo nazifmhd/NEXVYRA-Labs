@@ -208,11 +208,11 @@ html:not(.js) .signal-line-v {
 .js .decode-root:not([data-done]) .decode-cell:not([data-resolved]) .decode-final {
   opacity: 0;
   /* Failsafe: never leave the headline hidden if the script stalls. */
-  animation: decode-failsafe 0s linear 3.5s forwards;
+  animation: decode-failsafe 0s linear 4.5s forwards;
 }
 .js .decode-root:not([data-done]) .decode-cell:not([data-resolved]) .decode-glyph {
   opacity: 1;
-  animation: decode-failsafe-hide 0s linear 3.5s forwards;
+  animation: decode-failsafe-hide 0s linear 4.5s forwards;
 }
 @keyframes decode-failsafe { to { opacity: 1; } }
 @keyframes decode-failsafe-hide { to { opacity: 0; } }
@@ -384,6 +384,164 @@ html:not(.js) .signal-line-v {
   to { opacity: 1; transform: none; }
 }
 
+/* ---------- First-visit boot sequence (html.boot set by inline head script) ---------- */
+.boot-intro {
+  display: none;
+}
+html.boot .boot-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-navy-950);
+  pointer-events: none;
+  clip-path: inset(0 0 0 0);
+  animation: boot-exit 0.75s cubic-bezier(0.76, 0, 0.24, 1) 1.2s forwards;
+}
+@keyframes boot-exit {
+  to { clip-path: inset(0 0 100% 0); visibility: hidden; }
+}
+.boot-mark {
+  animation: boot-mark 1.1s var(--ease-expo) both;
+}
+@keyframes boot-mark {
+  from { opacity: 0; transform: scale(0.6) rotate(-45deg); }
+  to { opacity: 1; transform: none; }
+}
+.boot-word span,
+.boot-line {
+  display: inline-block;
+  opacity: 0;
+  animation: boot-in 0.5s var(--ease-expo) forwards;
+}
+.boot-word span { animation-delay: calc(var(--i) * 45ms + 120ms); transform: translateY(0.4em); }
+.boot-line { display: block; animation-delay: calc(var(--i) * 230ms + 320ms); transform: translateX(-6px); }
+@keyframes boot-in {
+  to { opacity: 1; transform: none; }
+}
+.boot-bar span {
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: boot-bar 1s cubic-bezier(0.65, 0, 0.35, 1) 0.15s forwards;
+}
+@keyframes boot-bar {
+  to { transform: scaleX(1); }
+}
+/* Page entrance waits for the boot to finish */
+html.boot .animate-rise { animation-delay: calc(var(--d, 0ms) + 1.35s); }
+html.boot header { animation: header-in 0.9s var(--ease-expo) 1.45s both; }
+@keyframes header-in {
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- Reticle cursor ---------- */
+.reticle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.reticle[data-visible] { opacity: 1; }
+.reticle[data-hidden] { opacity: 0; }
+.reticle-ring {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1px solid #fff;
+  border-radius: 999px;
+  transition:
+    transform 0.5s var(--ease-expo),
+    background-color 0.3s ease;
+}
+.reticle-tick {
+  position: absolute;
+  background: #fff;
+}
+.reticle[data-hover] .reticle-ring {
+  transform: scale(1.85) rotate(45deg);
+  background-color: rgb(255 255 255 / 0.06);
+}
+.reticle[data-press] .reticle-ring { transform: scale(0.75); }
+.reticle[data-hover][data-press] .reticle-ring { transform: scale(1.5) rotate(45deg); }
+.reticle-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.reticle[data-label] .reticle-label { opacity: 1; }
+.reticle[data-label] .reticle-ring { background-color: rgb(255 255 255 / 0.12); }
+.reticle-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 999px;
+  background: #fff;
+}
+
+/* ---------- Spotlight cards ---------- */
+.spot-card {
+  position: relative;
+  isolation: isolate;
+}
+.spot-card::before,
+.spot-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.spot-card::before {
+  z-index: -1;
+  background: radial-gradient(420px circle at var(--x, -999px) var(--y, -999px), var(--spot-fill), transparent 45%);
+}
+.spot-card::after {
+  padding: 1px;
+  background: radial-gradient(260px circle at var(--x, -999px) var(--y, -999px), var(--spot-edge), transparent 50%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.spot-light { --spot-fill: rgb(54 140 235 / 0.10); --spot-edge: rgb(54 140 235 / 0.75); }
+.spot-dark { --spot-fill: rgb(168 216 255 / 0.10); --spot-edge: rgb(168 216 255 / 0.7); }
+[data-spot] .spot-card::before,
+[data-spot] .spot-card::after { opacity: 1; }
+
+/* ---------- Capability preview panel ---------- */
+.preview-panel {
+  opacity: 0;
+  scale: 0.85;
+  transition: opacity 0.35s ease, scale 0.5s var(--ease-expo);
+}
+.preview-panel[data-on] { opacity: 1; scale: 1; }
+.preview-layer {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.preview-layer[data-on] { opacity: 1; }
+.preview-layer:not([data-on]) .draw-svg [pathLength] {
+  stroke-dashoffset: 1;
+  transition-duration: 0s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -408,6 +566,8 @@ html:not(.js) .signal-line-v {
   }
   .js .decode-root .decode-cell .decode-final { opacity: 1; }
   .js .decode-root .decode-cell .decode-glyph { opacity: 0; }
+  .boot-intro,
+  .reticle,
   .trace-pulse,
   .process-pulse,
   .process-pulse-v,

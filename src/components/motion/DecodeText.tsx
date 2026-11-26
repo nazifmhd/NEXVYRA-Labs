@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
+import { bootDelay } from "@/lib/motion";
 
 const GLYPHS = "01<>/{}[]=+*#%ΔΣλ∴NXVYRA";
 
@@ -37,7 +38,8 @@ export function DecodeText({
     const cells = Array.from(root.querySelectorAll<HTMLSpanElement>("[data-ch]"));
     cells.forEach((c) => delete c.dataset.resolved);
     const n = cells.length;
-    const resolveAt = cells.map((_, i) => delay + (i / Math.max(1, n - 1)) * duration * 0.75 + Math.random() * duration * 0.25);
+    const start0 = delay + bootDelay();
+    const resolveAt = cells.map((_, i) => start0 + (i / Math.max(1, n - 1)) * duration * 0.75 + Math.random() * duration * 0.25);
     let raf = 0;
     let start = 0;
     let last = 0;
@@ -54,7 +56,7 @@ export function DecodeText({
             cell.dataset.resolved = "true";
           } else {
             pending++;
-            if (elapsed > delay - 250) {
+            if (elapsed > start0 - 250) {
               const g = cell.lastElementChild as HTMLSpanElement | null;
               if (g) g.textContent = GLYPHS[(Math.random() * GLYPHS.length) | 0];
             }

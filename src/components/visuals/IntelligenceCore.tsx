@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { CoreFallback } from "./CoreFallback";
+import { bootDelay } from "@/lib/motion";
 
 /**
  * The Intelligence Core (blueprint §7.1).
@@ -339,7 +340,7 @@ export function IntelligenceCore({ className, readout = true }: { className?: st
     };
 
     const loop = (t: number) => {
-      if (t0 < 0) t0 = t;
+      if (t0 < 0) t0 = t + bootDelay();
       draw(t);
       if (!shown) {
         shown = true;

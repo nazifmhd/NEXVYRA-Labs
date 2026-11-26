@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionLabel";
 import { ButtonLink } from "@/components/ui/Button";
 import { Reveal } from "@/components/motion/Reveal";
+import { Spotlight } from "@/components/motion/Spotlight";
 
 export function SolutionsPreview({ index = "03" }: { index?: string }) {
   return (
@@ -16,6 +17,7 @@ export function SolutionsPreview({ index = "03" }: { index?: string }) {
           title={<span id="solutions-title">Start from the problem, not the tool.</span>}
           intro="Common challenges we help organisations solve. Each is an illustrative approach we adapt to your context — not an off-the-shelf product."
         />
+        <Spotlight>
         <ol className="mt-16 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {solutions.map((s, i) => (
             <Reveal
@@ -24,7 +26,7 @@ export function SolutionsPreview({ index = "03" }: { index?: string }) {
               delay={(i % 3) * 80}
               className={i === 0 ? "md:col-span-2 lg:col-span-1 lg:row-span-2" : undefined}
             >
-              <article className="group relative flex h-full flex-col rounded-2xl border border-line bg-white p-7 transition-[border-color,box-shadow,transform] duration-500 hover:-translate-y-1 hover:border-action/40 hover:shadow-[0_24px_50px_-30px_rgb(23_105_170/0.45)]">
+              <article className="spot-card group relative flex h-full flex-col rounded-2xl border border-line bg-white p-7 transition-[border-color,box-shadow,transform] duration-500 hover:-translate-y-1 hover:border-action/40 hover:shadow-[0_24px_50px_-30px_rgb(23_105_170/0.45)]">
                 <span
                   className="frame-marks pointer-events-none absolute inset-2.5 scale-[1.04] opacity-0 transition-[opacity,transform] duration-500 ease-[var(--ease-expo)] group-hover:scale-100 group-hover:opacity-100"
                   aria-hidden="true"
@@ -72,6 +74,7 @@ export function SolutionsPreview({ index = "03" }: { index?: string }) {
             </Reveal>
           ))}
         </ol>
+        </Spotlight>
         <div className="mt-12">
           <ButtonLink href="/solutions" variant="secondary" arrow>
             All solutions

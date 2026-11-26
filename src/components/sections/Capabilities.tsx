@@ -5,6 +5,7 @@ import { SectionHeader } from "@/components/ui/SectionLabel";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import { ServiceGlyph } from "@/components/visuals/ServiceGlyph";
 import { Reveal } from "@/components/motion/Reveal";
+import { CapabilityPreview } from "@/components/motion/CapabilityPreview";
 
 /** Capability index — an editorial, numbered list rather than a card grid. */
 export function Capabilities({ index = "02", headingLevel = "h2" }: { index?: string; headingLevel?: "h1" | "h2" }) {
@@ -20,11 +21,15 @@ export function Capabilities({ index = "02", headingLevel = "h2" }: { index?: st
           intro="Four connected disciplines. Most engagements draw on more than one — an AI system still needs solid software, integrations and a path to production."
         />
 
+        <div className="relative">
+        <CapabilityPreview items={services.map(({ slug, index, title, kicker }) => ({ slug, index, title, kicker }))} />
         <ul className="mt-16 border-t border-navy/15">
           {services.map((s, i) => (
             <Reveal as="li" key={s.slug} delay={i * 70} className="border-b border-navy/15">
               <Link
                 href={`/services/${s.slug}`}
+                data-preview={i}
+                data-cursor="Explore"
                 className="group relative grid grid-cols-[auto_1fr_auto] items-start gap-x-5 gap-y-3 py-8 sm:gap-x-8 lg:grid-cols-[5rem_1.1fr_1.3fr_auto] lg:items-center lg:py-10"
               >
                 <span
@@ -52,6 +57,7 @@ export function Capabilities({ index = "02", headingLevel = "h2" }: { index?: st
             </Reveal>
           ))}
         </ul>
+        </div>
       </Container>
     </section>
   );
