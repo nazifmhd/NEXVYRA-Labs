@@ -339,7 +339,14 @@ export function IntelligenceCore({ className, readout = true }: { className?: st
       }
     };
 
+    let lastFrame = 0;
+    const frameGap = small ? 1000 / 30 : 0; // phones: 30fps is plenty for a slow-moving visual
     const loop = (t: number) => {
+      if (frameGap && t - lastFrame < frameGap) {
+        raf = requestAnimationFrame(loop);
+        return;
+      }
+      lastFrame = t;
       if (t0 < 0) t0 = t + bootDelay();
       draw(t);
       if (!shown) {
@@ -349,8 +356,9 @@ export function IntelligenceCore({ className, readout = true }: { className?: st
       raf = requestAnimationFrame(loop);
     };
 
+    let armed = false; // becomes true once the browser is idle after load
     const start = () => {
-      if (running || reduced || !visible || document.hidden) return;
+      if (!armed || running || reduced || !visible || document.hidden) return;
       running = true;
       raf = requestAnimationFrame(loop);
     };
@@ -362,11 +370,19 @@ export function IntelligenceCore({ className, readout = true }: { className?: st
     const still = () => draw(4200, true);
 
     resize();
+    let idleHandle = 0;
     if (reduced) {
       still();
       setReady(true);
     } else {
-      start(); // first animated frame reveals the canvas and begins the assembly
+      // The static SVG is already showing; begin the animation once the page has
+      // finished its critical work so it never competes with first load.
+      const begin = () => {
+        armed = true;
+        start();
+      };
+      const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+      idleHandle = w.requestIdleCallback ? w.requestIdleCallback(begin, { timeout: 2500 }) : window.setTimeout(begin, 1200);
     }
 
     const ro = new ResizeObserver(() => {
@@ -403,6 +419,9 @@ export function IntelligenceCore({ className, readout = true }: { className?: st
 
     return () => {
       stop();
+      const w = window as Window & { cancelIdleCallback?: (h: number) => void };
+      if (w.cancelIdleCallback) w.cancelIdleCallback(idleHandle);
+      else window.clearTimeout(idleHandle);
       ro.disconnect();
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);

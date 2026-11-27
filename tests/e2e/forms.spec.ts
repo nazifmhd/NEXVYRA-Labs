@@ -71,7 +71,7 @@ test("talent pool form submits", async ({ page }) => {
   await page.getByLabel("About you").fill("I build web platforms and care about testing and documentation.");
   await page.getByRole("checkbox", { name: /privacy notice/ }).check();
   await page.getByRole("button", { name: "Join the talent pool" }).click();
-  await expect(page.getByRole("status")).toContainText("You’re in the talent pool.");
+  await expect(page.getByRole("status")).toContainText("You’re in the talent pool.", { timeout: 45_000 }); // first call compiles the API in dev
 });
 
 test("readiness check produces a result and a pre-filled enquiry link", async ({ page }) => {

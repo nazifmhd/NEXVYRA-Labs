@@ -16,3 +16,4 @@ screenshots/
 test-results/
 playwright-report/
 .inspect/
+.next-perf/

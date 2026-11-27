@@ -135,8 +135,10 @@
     transform 0.9s var(--ease-expo) var(--d, 0ms);
 }
 
+/* Starts partly visible: content is readable (and counts as painted) from the
+   first frame, then settles into place. */
 @keyframes rise {
-  from { opacity: 0; transform: translate3d(0, 0.5em, 0); }
+  from { opacity: 0.35; transform: translate3d(0, 0.5em, 0); }
   to { opacity: 1; transform: none; }
 }
 .animate-rise {
@@ -205,14 +207,16 @@ html:not(.js) .signal-line-v {
   opacity: 0;
   pointer-events: none;
 }
-.js .decode-root:not([data-done]) .decode-cell:not([data-resolved]) .decode-final {
-  opacity: 0;
-  /* Failsafe: never leave the headline hidden if the script stalls. */
-  animation: decode-failsafe 0s linear 4.5s forwards;
-}
-.js .decode-root:not([data-done]) .decode-cell:not([data-resolved]) .decode-glyph {
-  opacity: 1;
-  animation: decode-failsafe-hide 0s linear 4.5s forwards;
+@media (min-width: 768px) {
+  .js .decode-root:not([data-done]) .decode-cell:not([data-resolved]) .decode-final {
+    opacity: 0;
+    /* Failsafe: never leave the headline hidden if the script stalls. */
+    animation: decode-failsafe 0s linear 4.5s forwards;
+  }
+  .js .decode-root:not([data-done]) .decode-cell:not([data-resolved]) .decode-glyph {
+    opacity: 1;
+    animation: decode-failsafe-hide 0s linear 4.5s forwards;
+  }
 }
 @keyframes decode-failsafe { to { opacity: 1; } }
 @keyframes decode-failsafe-hide { to { opacity: 0; } }
@@ -373,14 +377,6 @@ html:not(.js) .signal-line-v {
   60%, 100% { background-position: -120% 0; }
 }
 
-/* Footer wordmark sweep: a gradient band travelling through the clipped SVG text */
-.wm-sweep {
-  animation: wm-sweep 9s ease-in-out infinite;
-}
-@keyframes wm-sweep {
-  0% { transform: translateX(0); }
-  60%, 100% { transform: translateX(1720px); }
-}
 
 /* ---------- Slow idle rotation for static core marks ---------- */
 .spin-slow {
@@ -422,7 +418,7 @@ html.boot .boot-intro {
   animation: boot-mark 1.1s var(--ease-expo) both;
 }
 @keyframes boot-mark {
-  from { opacity: 0; transform: scale(0.6) rotate(-45deg); }
+  from { opacity: 1; transform: scale(0.6) rotate(-45deg); }
   to { opacity: 1; transform: none; }
 }
 .boot-word span,
@@ -690,7 +686,7 @@ html.boot header { animation: header-in 0.9s var(--ease-expo) 1.45s both; }
   .process-pulse-v,
   .scanline,
   .sweep-text,
-  .wm-sweep,
+  .wm-sweep-text,
   .probe,
   .scan-reveal::after {
     display: none;

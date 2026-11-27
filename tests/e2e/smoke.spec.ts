@@ -27,7 +27,10 @@ test("no horizontal overflow on key pages @mobile", async ({ page }) => {
   await prepare(page);
   for (const route of ["/", "/contact", "/services/ai-engineering", "/ai-readiness", "/insights/rag-that-holds-up-in-production"]) {
     await page.goto(route);
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    // On mobile, overflowing content widens the layout viewport (innerWidth), so compare both measures.
+    const overflow = await page.evaluate(() =>
+      Math.max(document.documentElement.scrollWidth, window.innerWidth) - document.documentElement.clientWidth,
+    );
     expect(overflow, `${route} overflows horizontally by ${overflow}px`).toBeLessThanOrEqual(1);
   }
 });

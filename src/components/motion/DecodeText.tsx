@@ -30,7 +30,8 @@ export function DecodeText({
   useEffect(() => {
     const root = ref.current;
     if (!root) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // Phones and reduced motion get the plain headline immediately (fast first paint).
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || window.innerWidth < 768) {
       root.dataset.done = "true";
       return;
     }

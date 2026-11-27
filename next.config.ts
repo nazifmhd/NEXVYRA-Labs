@@ -28,6 +28,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Allows a second, isolated build (e.g. for performance testing) alongside the dev server.
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   poweredByHeader: false,
   reactStrictMode: true,
   images: { formats: ["image/avif", "image/webp"] },

@@ -292,7 +292,7 @@ function Console({ active, children, compact = false }: { active: number; childr
       <div className="relative flex items-center justify-between border-b border-white/10 px-5 py-3.5 font-mono text-[0.68rem] tracking-[0.12em] text-sky/70 uppercase">
         <span className="flex items-center gap-2">
           <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-          System trace · knowledge-assistant
+          {compact ? "System trace" : "System trace · knowledge-assistant"}
         </span>
         <span className="tabular-nums">
           {String(active + 1).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}
@@ -317,6 +317,110 @@ function Console({ active, children, compact = false }: { active: number; childr
       <p className="relative border-t border-white/10 px-5 py-3 font-mono text-[0.62rem] tracking-[0.1em] text-sky/45 uppercase">
         Illustrative example — not client data
       </p>
+    </div>
+  );
+}
+
+/**
+ * Mobile: a swipeable carousel — one step and its console per card — instead
+ * of six stacked consoles. Native scroll-snap (no scroll hijacking), with
+ * arrow buttons, step dots and keyboard support.
+ */
+function MobileWalkthrough() {
+  const [current, setCurrent] = useState(0);
+  const track = useRef<HTMLDivElement>(null);
+  const cards = useRef<(HTMLElement | null)[]>([]);
+
+  useEffect(() => {
+    const root = track.current;
+    if (!root || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) if (e.isIntersecting) setCurrent(Number((e.target as HTMLElement).dataset.card));
+      },
+      { root, threshold: 0.6 },
+    );
+    cards.current.forEach((c) => c && io.observe(c));
+    return () => io.disconnect();
+  }, []);
+
+  const go = (n: number) => {
+    const i = Math.max(0, Math.min(steps.length - 1, n));
+    const el = cards.current[i];
+    const root = track.current;
+    if (!el || !root) return;
+    const first = cards.current[0];
+    root.scrollTo({ left: el.offsetLeft - (first?.offsetLeft ?? 0), behavior: prefersReducedMotion() ? "auto" : "smooth" });
+  };
+
+  return (
+    <div className="min-w-0 lg:hidden" role="region" aria-roledescription="carousel" aria-label="Walkthrough: how the system handles one question">
+      <div className="flex items-center justify-between gap-4">
+        <p className="font-mono text-[0.72rem] tracking-[0.14em] text-muted uppercase" aria-live="polite">
+          Step {String(current + 1).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}
+        </p>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => go(current - 1)}
+            disabled={current === 0}
+            aria-label="Previous step"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-navy transition-colors hover:border-action/50 disabled:opacity-35"
+          >
+            <span aria-hidden="true">←</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => go(current + 1)}
+            disabled={current === steps.length - 1}
+            aria-label="Next step"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-navy text-white transition-colors hover:bg-action disabled:opacity-35"
+          >
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+      <div className="mt-3 flex gap-1" aria-hidden="true">
+        {steps.map((s, n) => (
+          <span key={s.key} className="h-1 flex-1 overflow-hidden rounded-full bg-line">
+            <span className="block h-full origin-left bg-gradient-to-r from-action to-accent transition-transform duration-500" style={{ transform: `scaleX(${n <= current ? 1 : 0})` }} />
+          </span>
+        ))}
+      </div>
+
+      <div
+        ref={track}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowRight") { e.preventDefault(); go(current + 1); }
+          if (e.key === "ArrowLeft") { e.preventDefault(); go(current - 1); }
+        }}
+        className="-mx-5 mt-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-5 px-5 pb-2 outline-none [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-accent/40 sm:-mx-8 sm:scroll-px-8 sm:px-8 [&::-webkit-scrollbar]:hidden"
+      >
+        {steps.map((s, n) => (
+          <article
+            key={s.key}
+            ref={(el) => {
+              cards.current[n] = el;
+            }}
+            data-card={n}
+            aria-roledescription="slide"
+            aria-label={`Step ${n + 1} of ${steps.length}: ${s.title}`}
+            className="w-[88%] max-w-md shrink-0 snap-start"
+          >
+            <p className="font-mono text-[0.72rem] tracking-[0.14em] text-action uppercase">
+              {String(n + 1).padStart(2, "0")} · {s.tag}
+            </p>
+            <h3 className="mt-2 font-display text-[1.45rem] leading-tight font-medium text-navy">{s.title}</h3>
+            <p className="mt-2 text-[0.98rem] leading-relaxed text-muted">{s.body}</p>
+            <div className="mt-5" aria-hidden="true">
+              <Console active={n} compact>
+                <Stage k={s.key} active={n === current} />
+              </Console>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   );
 }
@@ -351,7 +455,9 @@ export function FollowSystem({ index = "03" }: { index?: string }) {
         />
 
         <div className="mt-16 grid gap-10 lg:grid-cols-12 lg:gap-16">
-          <ol className="relative lg:col-span-5">
+          <MobileWalkthrough />
+
+          <ol className="relative hidden lg:col-span-5 lg:block">
             <span className="absolute top-2 bottom-2 left-[0.6875rem] w-px bg-line" aria-hidden="true" />
             {steps.map((s, n) => (
               <li
@@ -384,12 +490,6 @@ export function FollowSystem({ index = "03" }: { index?: string }) {
                     {s.title}
                   </h3>
                   <p className="mt-3 max-w-md text-[1.02rem] leading-relaxed text-muted">{s.body}</p>
-                </div>
-                {/* Mobile: inline console per step */}
-                <div className="mt-6 lg:hidden" aria-hidden="true">
-                  <Console active={n} compact>
-                    <Stage k={s.key} active={n === active} />
-                  </Console>
                 </div>
               </li>
             ))}

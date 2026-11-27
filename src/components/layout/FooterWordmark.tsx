@@ -2,8 +2,10 @@
  * Footer wordmark drawn as SVG text with textLength, so it spans exactly the
  * container width at every screen size: its left and right edges line up with
  * the footer columns, and it sits on its own baseline above the divider.
- * The light sweep is a gradient band clipped to the same text, so the outline
- * and the sweep can never drift apart.
+ *
+ * The light sweep is an animated gradient fill on a second copy of the same
+ * text (no hidden <text> inside a clipPath — browsers report those as the
+ * page's Largest Contentful Paint, which corrupts the metric).
  */
 export function FooterWordmark({ text }: { text: string }) {
   const W = 1000;
@@ -22,21 +24,28 @@ export function FooterWordmark({ text }: { text: string }) {
   return (
     <svg viewBox={`0 -2 ${W} ${H + 4}`} className="block h-auto w-full select-none" aria-hidden="true" focusable="false">
       <defs>
-        <clipPath id="footer-wm-clip">
-          <text {...textProps}>{text}</text>
-        </clipPath>
-        <linearGradient id="footer-wm-sweep" x1="0" y1="0" x2="1" y2="0">
+        <linearGradient id="footer-wm-sweep" gradientUnits="userSpaceOnUse" x1={-360} y1={0} x2={0} y2={0}>
           <stop offset="0%" stopColor="#A8D8FF" stopOpacity="0" />
           <stop offset="50%" stopColor="#A8D8FF" stopOpacity="0.45" />
           <stop offset="100%" stopColor="#A8D8FF" stopOpacity="0" />
+          <animateTransform
+            attributeName="gradientTransform"
+            type="translate"
+            values="0 0; 1720 0; 1720 0"
+            keyTimes="0; 0.6; 1"
+            calcMode="spline"
+            keySplines="0.45 0 0.55 1; 0 0 1 1"
+            dur="9s"
+            repeatCount="indefinite"
+          />
         </linearGradient>
       </defs>
       <text {...textProps} fill="none" stroke="rgb(168 216 255 / 0.3)" strokeWidth={1} vectorEffect="non-scaling-stroke">
         {text}
       </text>
-      <g clipPath="url(#footer-wm-clip)">
-        <rect className="wm-sweep" x={-360} y={-2} width={360} height={H + 4} fill="url(#footer-wm-sweep)" />
-      </g>
+      <text {...textProps} fill="url(#footer-wm-sweep)" className="wm-sweep-text">
+        {text}
+      </text>
     </svg>
   );
 }

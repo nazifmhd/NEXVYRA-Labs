@@ -9,6 +9,7 @@ import { ReticleCursor } from "@/components/motion/ReticleCursor";
 import { BootIntro } from "@/components/layout/BootIntro";
 import { Assistant } from "@/components/assistant/Assistant";
 import { routeTitles } from "@/lib/assistant/routes";
+import { ogImagePath } from "@/lib/og/registry";
 import "./globals.css";
 
 // Self-hosted variable fonts (no build-time network dependency, no third-party font requests).
@@ -34,7 +35,7 @@ const mono = localFont({
 
 const { brand } = siteConfig;
 
-const bootScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(!sessionStorage.getItem('nx-boot')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('boot');sessionStorage.setItem('nx-boot','1');setTimeout(function(){d.classList.remove('boot')},2100)}}catch(e){}})();`;
+const bootScript = `(function(){var d=document.documentElement;d.classList.add('js');try{var c=navigator.connection;var slow=c&&(c.saveData||/2g|3g/.test(c.effectiveType||''));if(!sessionStorage.getItem('nx-boot')&&!slow&&matchMedia('(min-width: 768px)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('boot');sessionStorage.setItem('nx-boot','1');setTimeout(function(){d.classList.remove('boot')},2100)}}catch(e){}})();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -49,8 +50,9 @@ export const metadata: Metadata = {
     description: brand.description,
     url: siteConfig.siteUrl,
     locale: "en",
+    images: [{ url: ogImagePath("/"), width: 1200, height: 630, alt: `${brand.displayName} — ${brand.tagline}` }],
   },
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", images: [ogImagePath("/")] },
   formatDetection: { telephone: false },
 };
 
