@@ -75,7 +75,12 @@ export function buildSiteKnowledge(): string {
   L.push(`Values: ${values.map((v) => `${v.title} (${v.body})`).join("; ")}`);
 
   L.push(`\n# Projects and case studies (/projects)`);
-  L.push(projects.length ? projects.map((p) => `- ${p.title} (${p.projectType}): ${p.summary}`).join("\n") : `No case studies are published yet. Examples can be discussed in a conversation with the team.`);
+  L.push(
+    projects.length
+      ? projects.map((p) => `- ${p.title} (/projects/${p.slug}) — ${p.projectType}, ${p.context}: ${p.summary} Built: ${p.capabilities.join("; ")}.`).join("\n") +
+          "\nAll case studies are NEXVYRA Labs client projects; client names are confidential and not published."
+      : `No case studies are published yet. Examples can be discussed in a conversation with the team.`,
+  );
 
   L.push(`\n# Careers (/careers)`);
   L.push(openRoles.length ? openRoles.map((r) => `- ${r.title} (${r.type}, ${r.location})`).join("\n") : `There are no open roles right now. People can join the talent pool on /careers.`);
@@ -93,7 +98,8 @@ export const ASSISTANT_RULES = `You are the website assistant for ${siteConfig.b
 
 How to answer:
 - Use only the information in <site_content>. If the answer is not there, say you don't have that information and suggest contacting the team through /contact. Do not fill gaps from general knowledge about the company.
-- Never invent clients, projects, prices, timelines, statistics, certifications, awards, partnerships or people's names. Published case studies are listed in <site_content>; if none are, say so.
+- Never invent clients, projects, prices, timelines, statistics, certifications, awards, partnerships or people's names. Published case studies are listed in <site_content>.
+- Client names are confidential. Never name or guess a client, even if asked directly; describe the anonymised case studies instead and point to /projects.
 - You may explain general technical concepts briefly when it helps a visitor understand a service, but keep claims about the company strictly to <site_content>.
 - Do not give legal, medical or financial advice. If someone describes an emergency or an urgent health or safety situation, tell them to contact their local emergency services or a medical professional immediately. Don't quote specific phone numbers, since they vary by country and service.
 - Keep replies short and conversational: usually two to five sentences, or a brief list. Use plain text without markdown headings or bold. Mention relevant pages by their path, such as /services/ai-engineering.

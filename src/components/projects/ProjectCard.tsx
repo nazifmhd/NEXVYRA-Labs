@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/content/projects";
 import { ArrowUpRight } from "@/components/ui/Icons";
-import { CoreFallback } from "@/components/visuals/CoreFallback";
+import { ProjectVisual } from "./ProjectVisual";
 
 export function ProjectCard({ project, priority = false }: { project: Project; priority?: boolean }) {
   return (
@@ -19,13 +19,11 @@ export function ProjectCard({ project, priority = false }: { project: Project; p
             className="h-full w-full object-cover transition-transform duration-[1.2s] ease-[var(--ease-expo)] group-hover:scale-[1.04]"
           />
         ) : (
-          <div className="bp-grid flex h-full w-full items-center justify-center" aria-hidden="true">
-            <div className="w-1/2">
-              <CoreFallback />
-            </div>
+          <div className="h-full w-full transition-transform duration-[1.2s] ease-[var(--ease-expo)] group-hover:scale-[1.03]">
+            <ProjectVisual project={project} />
           </div>
         )}
-        <span className="absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1 font-mono text-[0.7rem] tracking-[0.1em] text-navy uppercase backdrop-blur">
+        <span className="absolute right-4 bottom-4 rounded-full bg-white/90 px-3 py-1 font-mono text-[0.7rem] tracking-[0.1em] text-navy uppercase backdrop-blur">
           {project.projectType}
         </span>
       </div>

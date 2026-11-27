@@ -13,6 +13,8 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Spotlight } from "@/components/motion/Spotlight";
 import { Commitments } from "@/components/sections/Commitments";
 import { CtaBand } from "@/components/sections/CtaBand";
+import { projects } from "@/content/projects";
+import { ProjectCard } from "@/components/projects/ProjectCard";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -34,6 +36,7 @@ export default async function IndustryPage({ params }: Props) {
   const ind = getIndustry(slug);
   if (!ind) notFound();
   const others = industries.filter((i) => i.slug !== ind.slug);
+  const work = projects.filter((p) => p.industry === ind.slug);
   const contactServices = Array.from(new Set(ind.solutions.flatMap((s) => s.services))).join(",");
 
   return (
@@ -124,7 +127,22 @@ export default async function IndustryPage({ params }: Props) {
         </Container>
       </section>
 
-      <Commitments index="04" />
+      {work.length > 0 && (
+        <section className="bg-mist py-24 sm:py-28" aria-labelledby="ind-work-title">
+          <Container>
+            <SectionHeader index="04" label="Relevant work" title={<span id="ind-work-title">Built in this sector.</span>} />
+            <ul className="mt-14 grid gap-x-8 gap-y-14 md:grid-cols-2">
+              {work.map((p) => (
+                <li key={p.slug}>
+                  <ProjectCard project={p} />
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </section>
+      )}
+
+      <Commitments index={work.length > 0 ? "05" : "04"} />
 
       <section className="border-t border-line bg-white py-16" aria-labelledby="other-ind-title">
         <Container>

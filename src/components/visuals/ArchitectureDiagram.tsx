@@ -23,6 +23,10 @@ export function ArchitectureDiagram({ diagram, initial, caption }: { diagram: Di
   const node = byId[selected];
   const linked = new Set(diagram.edges.filter(([a, b]) => a === selected || b === selected).flat());
   const service = node?.service ? services.find((s) => s.slug === node.service) : undefined;
+  const neighbours = diagram.edges
+    .filter(([a, b]) => a === selected || b === selected)
+    .map(([a, b]) => byId[a === selected ? b : a])
+    .filter((n, i, arr) => n && arr.findIndex((x) => x?.id === n.id) === i);
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
@@ -142,6 +146,25 @@ export function ArchitectureDiagram({ diagram, initial, caption }: { diagram: Di
                       </li>
                     ))}
                   </ul>
+                )}
+                {neighbours.length > 0 && (
+                  <div>
+                    <p className="font-mono text-[0.62rem] tracking-[0.14em] text-sky/50 uppercase">Connects to</p>
+                    <ul className="mt-2 flex flex-wrap gap-2">
+                      {neighbours.map((n) => (
+                        <li key={n!.id}>
+                          <button
+                            type="button"
+                            onClick={() => setSelected(n!.id)}
+                            className="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-[0.8rem] text-white transition-colors hover:border-accent hover:bg-accent/25"
+                          >
+                            <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+                            {n!.label}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
                 {service && (
                   <Link

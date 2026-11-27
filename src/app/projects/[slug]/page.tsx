@@ -64,6 +64,7 @@ export default async function CaseStudyPage({ params }: Props) {
             <div className="col-span-2">
               <dt className="font-mono text-[0.7rem] tracking-[0.14em] text-muted uppercase">Context</dt>
               <dd className="mt-1 text-navy">{p.context}</dd>
+              {p.projectType === "Client delivery" && <dd className="mt-1 text-[0.82rem] text-muted">Client details are kept confidential.</dd>}
             </div>
             <div>
               <dt className="font-mono text-[0.7rem] tracking-[0.14em] text-muted uppercase">Type</dt>
@@ -119,13 +120,21 @@ export default async function CaseStudyPage({ params }: Props) {
             </ol>
           </Block>
 
+          {p.capabilities.length > 0 && (
+            <Block index={idx()} label="Capabilities">
+              <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+                {p.capabilities.map((c) => (
+                  <li key={c} className="flex gap-3 text-navy">
+                    <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            </Block>
+          )}
+
           <Block index={idx()} label="Architecture">
             <p>{p.architecture.summary}</p>
-            {p.architecture.diagram && (
-              <div className="mt-8 not-prose">
-                <ArchitectureDiagram diagram={p.architecture.diagram} caption={`System architecture · ${p.title}`} />
-              </div>
-            )}
             {p.architecture.components.length > 0 && (
               <dl className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
                 {p.architecture.components.map((c) => (
@@ -137,6 +146,12 @@ export default async function CaseStudyPage({ params }: Props) {
               </dl>
             )}
           </Block>
+          {p.architecture.diagram && (
+            <div className="pb-12">
+              <p className="mb-4 font-mono text-[0.72rem] tracking-[0.14em] text-muted uppercase">Explore the architecture — select a component</p>
+              <ArchitectureDiagram diagram={p.architecture.diagram} initial={p.architecture.diagram.nodes.find((x) => x.tone === "core")?.id} caption={`System architecture · ${p.title}`} />
+            </div>
+          )}
 
           <Block index={idx()} label="Technology">
             <ul className="flex flex-wrap gap-2">
@@ -149,7 +164,7 @@ export default async function CaseStudyPage({ params }: Props) {
           </Block>
 
           {p.outcomes.length > 0 && (
-            <Block index={idx()} label="Outcomes">
+            <Block index={idx()} label="What was delivered">
               <ul className="grid gap-4 sm:grid-cols-2">
                 {p.outcomes.map((o) => (
                   <li key={o.detail} className="rounded-2xl border border-line p-6">
@@ -163,7 +178,7 @@ export default async function CaseStudyPage({ params }: Props) {
           )}
 
           {p.lessons.length > 0 && (
-            <Block index={idx()} label="Lessons">
+            <Block index={idx()} label="Boundaries & notes">
               <ul className="space-y-3">
                 {p.lessons.map((l) => (
                   <li key={l}>{l}</li>
