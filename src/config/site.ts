@@ -28,8 +28,8 @@ export const siteConfig = {
     phone: null as string | null,
     /** Publish only if approved. */
     address: null as string | null,
-    /** Location wording (blueprint: Sri Lanka + international, global-first). */
-    locationLine: "Based in Sri Lanka · Working with teams worldwide",
+    /** Public working-model line. The company location is intentionally not published. */
+    locationLine: "Remote-first · Working with teams worldwide",
   },
 
   social: {
@@ -38,7 +38,7 @@ export const siteConfig = {
     instagram: null as string | null,
   },
 
-  serviceAreas: ["Sri Lanka", "International (remote)"],
+  serviceAreas: ["Worldwide (remote)"],
 
   legal: {
     /** Flip to true once privacy/terms have had qualified legal review. */

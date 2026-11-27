@@ -24,7 +24,7 @@ export const referenceArchitecture: Diagram = {
     {
       id: "sources",
       label: "Data sources",
-      sub: "Docs · DBs · APIs",
+      sub: "Docs · APIs",
       x: 110,
       y: 110,
       tone: "edge",
@@ -35,7 +35,7 @@ export const referenceArchitecture: Diagram = {
     {
       id: "ingest",
       label: "Ingestion",
-      sub: "Clean · chunk · index",
+      sub: "Chunk · index",
       x: 330,
       y: 110,
       detail: "Pipelines that extract, clean, split and index content, keeping it in sync as sources change and carrying access permissions along with the data.",
@@ -45,7 +45,7 @@ export const referenceArchitecture: Diagram = {
     {
       id: "retrieval",
       label: "Retrieval",
-      sub: "Search · rank · filter",
+      sub: "Search · rank",
       x: 550,
       y: 110,
       detail: "Finds the most relevant, permitted information for each request using search, ranking and filters — and discards weak matches instead of guessing.",
@@ -75,7 +75,7 @@ export const referenceArchitecture: Diagram = {
     },
     {
       id: "guard",
-      label: "Guardrails & evals",
+      label: "Guardrails",
       sub: "Check · score",
       x: 770,
       y: 300,
@@ -85,8 +85,8 @@ export const referenceArchitecture: Diagram = {
     },
     {
       id: "apps",
-      label: "Your applications",
-      sub: "Web · chat · internal",
+      label: "Applications",
+      sub: "Web · chat",
       x: 890,
       y: 110,
       tone: "edge",

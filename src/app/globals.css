@@ -373,6 +373,15 @@ html:not(.js) .signal-line-v {
   60%, 100% { background-position: -120% 0; }
 }
 
+/* Footer wordmark sweep: a gradient band travelling through the clipped SVG text */
+.wm-sweep {
+  animation: wm-sweep 9s ease-in-out infinite;
+}
+@keyframes wm-sweep {
+  0% { transform: translateX(0); }
+  60%, 100% { transform: translateX(1720px); }
+}
+
 /* ---------- Slow idle rotation for static core marks ---------- */
 .spin-slow {
   animation: spin-slow 90s linear infinite;
@@ -681,6 +690,7 @@ html.boot header { animation: header-in 0.9s var(--ease-expo) 1.45s both; }
   .process-pulse-v,
   .scanline,
   .sweep-text,
+  .wm-sweep,
   .probe,
   .scan-reveal::after {
     display: none;

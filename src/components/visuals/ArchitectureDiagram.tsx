@@ -25,9 +25,9 @@ export function ArchitectureDiagram({ diagram, initial, caption }: { diagram: Di
   const service = node?.service ? services.find((s) => s.slug === node.service) : undefined;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-12">
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
       {/* Diagram (md+) */}
-      <div className="relative hidden overflow-hidden rounded-[1.5rem] border border-line bg-mist md:block lg:col-span-12">
+      <div className="@container relative hidden overflow-hidden rounded-[1.5rem] border border-line bg-mist md:block">
         <div className="bp-grid-fine pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="relative" style={{ aspectRatio: `${W} / ${H}` }}>
           <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full" aria-hidden="true" focusable="false">
@@ -75,7 +75,7 @@ export function ArchitectureDiagram({ diagram, initial, caption }: { diagram: Di
                 aria-controls={panelId}
                 data-cursor="Inspect"
                 className={cn(
-                  "absolute flex w-[17%] -translate-x-1/2 -translate-y-1/2 flex-col items-start rounded-xl border px-3 py-2.5 text-left transition-[background-color,border-color,box-shadow,transform] duration-300",
+                  "absolute flex w-[18.5%] -translate-x-1/2 -translate-y-1/2 flex-col items-start rounded-xl border px-3 py-2.5 text-left transition-[background-color,border-color,box-shadow,transform] duration-300",
                   active
                     ? "z-10 scale-105 border-action bg-navy text-white shadow-[0_18px_40px_-18px_rgb(16_43_70/0.7)]"
                     : near
@@ -86,8 +86,8 @@ export function ArchitectureDiagram({ diagram, initial, caption }: { diagram: Di
                 )}
                 style={{ left: `${(n.x / W) * 100}%`, top: `${(n.y / H) * 100}%` }}
               >
-                <span className="font-display text-[clamp(0.72rem,1.15vw,0.98rem)] leading-tight font-medium">{n.label}</span>
-                <span className={cn("mt-0.5 font-mono text-[clamp(0.55rem,0.8vw,0.66rem)] tracking-[0.06em] uppercase", active ? "text-sky/80" : "text-muted")}>
+                <span className="font-display text-[clamp(0.72rem,1.55cqw,0.98rem)] leading-tight font-medium whitespace-nowrap">{n.label}</span>
+                <span className={cn("mt-0.5 font-mono text-[clamp(0.55rem,1.02cqw,0.66rem)] tracking-[0.06em] whitespace-nowrap uppercase", active ? "text-sky/80" : "text-muted")}>
                   {n.sub}
                 </span>
               </button>
@@ -121,19 +121,19 @@ export function ArchitectureDiagram({ diagram, initial, caption }: { diagram: Di
       </ul>
 
       {/* Detail panel */}
-      <div id={panelId} aria-live="polite" className="lg:col-span-12">
+      <div id={panelId} aria-live="polite">
         {node && (
-          <div key={node.id} className="animate-rise relative overflow-hidden rounded-[1.5rem] bg-navy-950 p-7 text-white sm:p-8">
+          <div key={node.id} className="animate-rise relative overflow-hidden rounded-[1.5rem] bg-navy-950 p-7 text-white sm:p-8 lg:h-full">
             <div className="bp-grid-dark pointer-events-none absolute inset-0 opacity-70" aria-hidden="true" />
             {/* Console readout: identity · what it does · examples & owner */}
-            <div className="relative grid gap-6 md:grid-cols-12 md:gap-10">
+            <div className="relative grid gap-6 md:grid-cols-12 md:gap-10 lg:flex lg:h-full lg:flex-col lg:gap-5">
               <div className="md:col-span-3">
                 <p className="font-mono text-[0.68rem] tracking-[0.14em] text-accent uppercase">Component</p>
                 <h3 className="mt-3 font-display text-[1.6rem] leading-tight font-medium">{node.label}</h3>
                 <p className="mt-1 font-mono text-[0.7rem] tracking-[0.08em] text-sky/60 uppercase">{node.sub}</p>
               </div>
-              <p className="text-[1rem] leading-relaxed text-sky/85 md:col-span-5 md:border-l md:border-white/10 md:pl-8">{node.detail}</p>
-              <div className="flex flex-col gap-5 md:col-span-4">
+              <p className="text-[1rem] leading-relaxed text-sky/85 md:col-span-5 md:border-l md:border-white/10 md:pl-8 lg:border-0 lg:pl-0 lg:text-[0.96rem]">{node.detail}</p>
+              <div className="flex flex-col gap-5 md:col-span-4 lg:flex-1">
                 {node.examples && (
                   <ul className="flex flex-wrap gap-2">
                     {node.examples.map((e) => (
@@ -146,7 +146,7 @@ export function ArchitectureDiagram({ diagram, initial, caption }: { diagram: Di
                 {service && (
                   <Link
                     href={`/services/${service.slug}`}
-                    className="group inline-flex items-center gap-2 text-[0.95rem] text-white hover:text-sky"
+                    className="group inline-flex items-center gap-2 text-[0.95rem] text-white hover:text-sky lg:mt-auto"
                   >
                     Delivered through {service.title}
                     <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

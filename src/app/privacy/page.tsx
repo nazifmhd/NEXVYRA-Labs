@@ -16,7 +16,7 @@ export default function PrivacyPage() {
     <LegalPage label="Legal" title="Privacy Policy" path="/privacy" intro="Plain-language information about the personal data this website collects and how it is used.">
       <h2>Who we are</h2>
       <p>
-        This website is operated by {who} (“we”, “us”). {contact.locationLine}.
+        This website is operated by {who} (“we”, “us”).
       </p>
 
       <h2>What we collect</h2>

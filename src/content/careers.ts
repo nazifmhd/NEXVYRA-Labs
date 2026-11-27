@@ -20,5 +20,5 @@ export const howWeWork = [
   { title: "Engineering first", body: "Code review, testing and documentation are part of the job, not extras." },
   { title: "Real problems", body: "Work that solves concrete business problems for real users." },
   { title: "Learning built in", body: "Technology moves fast; time to learn and share is part of how we work." },
-  { title: "Remote-friendly", body: "Based in Sri Lanka, collaborating with teams across time zones." },
+  { title: "Remote-first", body: "We collaborate with clients and teammates across time zones." },
 ] as const;

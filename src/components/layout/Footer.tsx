@@ -6,6 +6,7 @@ import { ArrowUpRight } from "@/components/ui/Icons";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "./Logo";
 import { InView } from "@/components/motion/InView";
+import { FooterWordmark } from "./FooterWordmark";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -89,19 +90,8 @@ export function Footer() {
           </div>
         </div>
 
-        <InView className="relative">
-        <div
-          className="stroke-text pointer-events-none -mb-[0.18em] pt-8 text-center font-display text-[clamp(4rem,17vw,15rem)] leading-none font-semibold tracking-[0.06em] [--stroke-color:rgb(168_216_255/0.28)] select-none"
-          aria-hidden="true"
-        >
-          {brand.wordmark}
-        </div>
-        <div
-          className="sweep-text pointer-events-none absolute inset-0 pt-8 text-center font-display text-[clamp(4rem,17vw,15rem)] leading-none font-semibold tracking-[0.06em] select-none"
-          aria-hidden="true"
-        >
-          {brand.wordmark}
-        </div>
+        <InView className="pointer-events-none py-10 sm:py-12">
+          <FooterWordmark text={brand.wordmark} />
         </InView>
 
         <div className="relative flex flex-col gap-4 border-t border-white/10 py-6 text-[0.85rem] text-sky/60 sm:flex-row sm:items-center sm:justify-between">
